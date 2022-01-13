@@ -2,6 +2,14 @@
   "name": "kanban2.0",
   "version": "1.0.0",
   "main": "index.js",
-  "author": "Neezar",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "docker-compose -f docker-compose.dev.yml up -d",
+    "build": "docker-compose -f docker-compose.dev.yml  build ",
+    "stop": "docker-compose -f docker-compose.dev.yml down && docker-compose -f docker-compose.dev.yml rm -f"
+  },
+  "devDependencies": {
+    "concurrently": "^6.5.1",
+    "husky": "^7.0.0"
+  }
 }
