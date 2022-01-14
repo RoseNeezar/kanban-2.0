@@ -19,4 +19,14 @@ export class AppController {
     console.log(tasksResponse);
     return 'first';
   }
+
+  @Get('/second')
+  async testSecondService(): Promise<string> {
+    const tasksResponse: any = await firstValueFrom(
+      this.firstClient.send({ cmd: 'pong' }, 'auth-some'),
+    );
+
+    console.log(tasksResponse);
+    return 'second';
+  }
 }

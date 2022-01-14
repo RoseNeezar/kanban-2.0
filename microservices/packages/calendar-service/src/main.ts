@@ -1,7 +1,7 @@
-import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
+import { ConfigService } from './config/config.service';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
@@ -10,6 +10,7 @@ async function bootstrap() {
       transport: Transport.REDIS,
       options: {
         url: new ConfigService().get('url'),
+        host: new ConfigService().get('host'),
       },
     },
   );
