@@ -10,6 +10,7 @@ async function bootstrap() {
       transport: Transport.REDIS,
       options: {
         url: new ConfigService().get('url'),
+        host: new ConfigService().get('host'),
       },
     },
   );

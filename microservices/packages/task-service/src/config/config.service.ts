@@ -4,6 +4,7 @@ export class ConfigService {
   constructor() {
     this.envConfig = {
       url: process.env.MICROSERVICE_URL,
+      host: 'redis',
     };
   }
 
