@@ -13,11 +13,11 @@ export class AppController {
   @Get('/first')
   async testFirstService(): Promise<string> {
     const tasksResponse: any = await firstValueFrom(
-      this.firstClient.send({ cmd: 'ping' }, 'auth-some'),
+      this.firstClient.send({ cmd: 'ping' }, 'auth-some what so mich cpu'),
     );
 
     console.log(tasksResponse);
-    return 'first';
+    return 'first and third and fourth';
   }
 
   @Get('/second')

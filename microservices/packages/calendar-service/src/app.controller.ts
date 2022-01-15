@@ -8,6 +8,6 @@ export class AppController {
 
   @MessagePattern({ cmd: 'pong' })
   pong(data: string): string {
-    return data + ' - pongooo';
+    return data + ' - pongooo ans then some';
   }
 }
