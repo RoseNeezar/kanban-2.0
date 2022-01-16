@@ -1,7 +1,18 @@
 {
-  "name": "root",
+  "name": "@kanban-client/root",
   "private": true,
+  "scripts": {
+    "start": "lerna run --scope @kanban-client/* --parallel start",
+    "build": "lerna run --scope @kanban-client/* --parallel build",
+    "serve": "lerna run --scope @kanban-client/* --parallel serve",
+    "clean": "lerna run --scope @kanban-client/* --parallel clean",
+    "lint": "lerna run --scope @kanban-client/root-app lint",
+    "add:root-app": "lerna add --scope @kanban-client/root-app "
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
