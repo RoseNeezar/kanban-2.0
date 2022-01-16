@@ -15,10 +15,16 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=postgres_password
-  redis:
+  task_redis:
     image: "redis:6.2-alpine"
+    command: --port 6379
     ports:
       - 6379:6379
+  calendar_redis:
+    image: "redis:6.2-alpine"
+    command: --port 6389
+    ports:
+      - 6389:6389
   api:
     depends_on:
       - postgres

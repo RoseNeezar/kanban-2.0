@@ -14,8 +14,7 @@ import { ConfigService } from './config/config.service';
     {
       provide: 'CALENDAR_SERVICE',
       useFactory: (configService: ConfigService) => {
-        const userServiceOptions = configService.get('calendarService');
-        return ClientProxyFactory.create(userServiceOptions);
+        return ClientProxyFactory.create(configService.get('calendarService'));
       },
       inject: [ConfigService],
     },
