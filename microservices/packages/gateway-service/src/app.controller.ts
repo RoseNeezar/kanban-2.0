@@ -8,6 +8,7 @@ export class AppController {
   constructor(
     private readonly appService: AppService,
     @Inject('TASK_SERVICE') private readonly firstClient: ClientProxy,
+    @Inject('CALENDAR_SERVICE') private readonly secondClient: ClientProxy,
   ) {}
 
   @Get('/first')
@@ -23,10 +24,10 @@ export class AppController {
   @Get('/second')
   async testSecondService(): Promise<string> {
     const tasksResponse: any = await firstValueFrom(
-      this.firstClient.send({ cmd: 'pong' }, 'auth-some'),
+      this.secondClient.send({ cmd: 'pong' }, 'auth-some'),
     );
 
     console.log(tasksResponse);
-    return 'second';
+    return 'second dsds';
   }
 }

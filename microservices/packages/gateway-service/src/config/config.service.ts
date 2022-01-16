@@ -8,13 +8,13 @@ export class ConfigService {
 
     this.envConfig.calendarService = {
       options: {
-        url: process.env.MICROSERVICE_URL,
+        url: process.env.CALENDAR_MICROSERVICE_URL,
       },
       transport: Transport.REDIS,
     };
     this.envConfig.taskService = {
       options: {
-        url: process.env.MICROSERVICE_URL,
+        url: process.env.TASK_MICROSERVICE_URL,
       },
       transport: Transport.REDIS,
     };

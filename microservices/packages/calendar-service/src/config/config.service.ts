@@ -3,8 +3,8 @@ export class ConfigService {
 
   constructor() {
     this.envConfig = {
-      url: process.env.MICROSERVICE_URL,
-      host: 'redis',
+      url: process.env.CALENDAR_MICROSERVICE_URL,
+      host: 'calendar_redis',
     };
   }
 
