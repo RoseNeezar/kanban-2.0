@@ -1,9 +1,9 @@
+import InputGroup from "@component/Input";
 import { Dialog, Transition } from "@headlessui/react";
+import { useAuthStore } from "@store/useAuth.store";
+import { errorHelper } from "@utils/errorHelper";
 import React, { ChangeEvent, FC, Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import InputGroup from "../../component/Input";
-import { useAuthStore } from "../../store/useAuth.store";
-import { errorHelper } from "../../utils/errorHelper";
 
 const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const navigate = useNavigate();
