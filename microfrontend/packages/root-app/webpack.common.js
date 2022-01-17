@@ -1,7 +1,8 @@
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-
+const path = require("path");
+const srcPath = path.join(__dirname, "src/app");
 module.exports = {
   stats: {
     errorDetails: true,
@@ -12,6 +13,13 @@ module.exports = {
       fs: false,
       os: false,
       module: false,
+    },
+    alias: {
+      "@component": path.resolve(srcPath, "component"),
+      "@api": path.resolve(srcPath, "api"),
+      "@pages": path.resolve(srcPath, "pages"),
+      "@store": path.resolve(srcPath, "store"),
+      "@utils": path.resolve(srcPath, "utils"),
     },
   },
   module: {
