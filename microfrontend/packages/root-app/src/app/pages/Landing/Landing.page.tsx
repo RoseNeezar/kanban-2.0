@@ -1,31 +1,31 @@
-import { Link, useLocation } from 'react-router-dom'
-import Devices from '../../../assets/devices.svg'
+import { Link, useLocation } from "react-router-dom";
+import Devices from "../../../assets/devices.svg";
 
 const Landing = () => {
-  console.log('somer')
-  console.log('somer')
-  const location = useLocation()
+  console.log("somer");
+  console.log("somer");
+  const location = useLocation();
   return (
-    <div tw=" bg-right bg-cover bg-gray-100 xl:h-screen">
+    <div tw=" bg-right bg-cover bg-dark-main xl:h-screen">
       <div tw="w-full container mx-auto p-6">
         <div tw="w-full flex items-center justify-between">
           <a
-            tw="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
+            tw="flex items-center text-dark-txt no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
             href="https://twitter.com/intent/tweet?url=#"
           >
             <svg
-              tw="h-8 fill-current text-indigo-600 pr-2"
+              tw="h-8 fill-current text-dark-txt pr-2"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
             >
               <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-5.6-4.29a9.95 9.95 0 0 1 11.2 0 8 8 0 1 0-11.2 0zm6.12-7.64l3.02-3.02 1.41 1.41-3.02 3.02a2 2 0 1 1-1.41-1.41z" />
-            </svg>{' '}
-            Todo app
+            </svg>{" "}
+            Kanban app
           </a>
 
           <div tw="flex w-1/2 justify-end content-center">
             <a
-              tw="inline-block text-blue-300 no-underline hover:text-indigo-800 hover:underline text-center h-10 p-2 md:h-auto md:p-4"
+              tw="inline-block text-dark-txt no-underline hover:text-dark-third hover:underline text-center h-10 p-2 md:h-auto md:p-4"
               data-tippy-content="@twitter_handle"
               href="https://twitter.com/intent/tweet?url=#"
             >
@@ -47,42 +47,29 @@ const Landing = () => {
       <div tw="container pt-24 md:pt-48 px-6 mx-auto flex flex-wrap flex-col md:flex-row items-center">
         <div tw="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
           <h1
-            tw="my-4 text-3xl md:text-5xl text-purple-800 font-bold leading-tight text-center md:text-left "
+            tw="my-4 text-3xl md:text-5xl text-dark-txt font-bold leading-tight text-center md:text-left "
             className="slide-in-bottom-h1"
           >
-            Todo App
+            Kanban App
           </h1>
           <p
-            tw="leading-normal text-base md:text-2xl mb-8 text-center md:text-left "
+            tw="leading-normal text-dark-txt text-base md:text-2xl mb-8 text-center md:text-left "
             className="slide-in-bottom-subtitle"
           >
-            Made with micro frontend architecture
-          </p>
-          <p
-            tw="text-blue-400 font-bold pb-8 lg:pb-6 text-center md:text-left "
-            className="fade-in"
-          >
-            Try it out !
+            The system takes its name from the cards that track production
+            within a factory
           </p>
           <div
             tw="flex w-full justify-center md:justify-start pb-24 lg:pb-0 "
             className="fade-in"
           >
             <Link
-              tw="h-12 mr-4 bg-purple-800 text-white text-center rounded-2xl p-3 w-32"
+              tw="h-12 mr-4 bg-dark-third font-bold tracking-widest text-dark-txt hover:bg-dark-second text-center rounded-2xl p-3 w-32"
               className="bounce-top-icons"
               to="/login"
               state={{ backgroundLocation: location }}
             >
               Login
-            </Link>
-            <Link
-              tw="h-12  bg-purple-800 text-white text-center rounded-2xl p-3 w-32"
-              className="bounce-top-icons"
-              to="/register"
-              state={{ backgroundLocation: location }}
-            >
-              Register
             </Link>
           </div>
         </div>
@@ -100,16 +87,13 @@ const Landing = () => {
           tw="w-full pt-16 pb-6 text-sm text-center md:text-left"
           className="fade-in"
         >
-          <a
-            tw="text-gray-500 no-underline hover:no-underline"
-            href="https://twitter.com/intent/tweet?url=#"
-          >
-            &copy; Todo App 2022
-          </a>
+          <div tw="text-dark-txt no-underline hover:no-underline">
+            &copy; Kanban App 2022
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Landing
+export default Landing;

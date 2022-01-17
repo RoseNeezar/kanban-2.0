@@ -25,15 +25,6 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader",
       },
-      // {
-      //   test: /\.tsx?$/,
-      //   exclude: /node_modules/,
-      //   loader: "esbuild-loader",
-      //   options: {
-      //     loader: "tsx",
-      //     tsconfigRaw: require("./tsconfig.json"),
-      //   },
-      // },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
         loader: "url-loader",
