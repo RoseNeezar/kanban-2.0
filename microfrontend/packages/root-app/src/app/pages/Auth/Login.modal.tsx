@@ -40,7 +40,7 @@ const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
         onClose={() => onDismiss()}
       >
         <div tw="min-h-screen px-4 text-center">
-          <Dialog.Overlay tw="fixed inset-0 bg-gray-600 opacity-25" />
+          <Dialog.Overlay tw="fixed inset-0 bg-gray-500 opacity-25" />
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -50,10 +50,10 @@ const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
             leaveFrom="opacity-100 scale-100"
             leaveTo="opacity-0 scale-95"
           >
-            <div tw="inline-block w-full max-w-sm my-16 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl bg-gray-100">
+            <div tw="inline-block w-full max-w-sm my-16 overflow-hidden text-left align-middle transition-all transform shadow-xl rounded-2xl bg-dark-main">
               <div tw="flex flex-col w-full p-5 pt-3 m-auto rounded-md ">
                 <div tw="flex flex-col py-4">
-                  <Dialog.Title tw="font-bold text-3xl text-indigo-800 text-center space-x-1">
+                  <Dialog.Title tw="font-bold text-3xl text-dark-txt text-center space-x-1">
                     Login
                   </Dialog.Title>
                 </div>
@@ -68,20 +68,19 @@ const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
                   <div tw="h-3" />
                   <div tw="bg-red-300" />
 
-                  {/* <InputGroup
-                    className="mb-2"
+                  <InputGroup
                     type="password"
                     value={password}
                     setValue={onChangeText}
                     placeholder="Password"
-                    error={errorHelper(errors.message, 'Password')}
+                    error={errorHelper(errors.message, "Password")}
                   />
                   <button
                     tw=" w-full py-2 mt-2 mb-2 text-base rounded-xl font-bold text-white bg-indigo-800 border-indigo-800 focus:outline-none focus:border-indigo-800 hover:bg-indigo-400"
                     onClick={() => handleSubmit()}
                   >
                     Confirm
-                  </button> */}
+                  </button>
                 </div>
               </div>
             </div>
