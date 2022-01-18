@@ -5,7 +5,7 @@ const Home: React.FC = () => {
   const location = useLocation();
 
   return (
-    <div tw="min-h-screen bg-gray-400 flex justify-center items-center ">
+    <div tw="min-h-screen bg-dark-main flex justify-center items-center w-full text-white">
       Kanban
     </div>
   );
