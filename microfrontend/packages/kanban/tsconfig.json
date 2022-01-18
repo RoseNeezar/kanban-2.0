@@ -19,16 +19,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": false,
-    "isolatedModules": true,
-    "baseUrl": ".",
-    "paths": {
-      "@component/*": ["src/app/component/*"],
-      "@api/*": ["src/app/api/*"],
-      "@pages/*": ["src/app/pages/*"],
-      "@store/*": ["src/app/store/*"],
-      "@utils/*": ["src/app/utils/*"],
-      "@remote/*": ["src/app/remote/*"]
-    }
+    "isolatedModules": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "types"],
   "exclude": ["node_modules", "webpack.*"]

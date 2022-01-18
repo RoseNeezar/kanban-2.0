@@ -1,28 +1,26 @@
 const { merge } = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const commonConfig = require("./webpack.common");
 const deps = require("./package.json").dependencies;
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
-const { SourceMapDevToolPlugin } = require("webpack");
+const webpack = require("webpack");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 
-const devConfig = {
+const prodConfig = {
   entry: "./src/index.ts",
-  mode: "development",
+  mode: "production",
   output: {
-    publicPath: "/",
-  },
-  devServer: {
-    port: 3000,
-    historyApiFallback: true,
+    filename: "[name].[contenthash].js",
+    // publicPath: '/root-app/latest/'
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"],
+    extensions: [".ts", ".tsx", ".js"],
   },
   plugins: [
     new ModuleFederationPlugin({
       name: "root-app",
       remotes: {
-        kanban: "kanban@http://localhost:3001/remoteEntry.js",
+        todo: `todo@https://optimistic-curie-93c51c.netlify.app/remoteEntry.js`,
       },
       shared: {
         ...deps,
@@ -34,13 +32,7 @@ const devConfig = {
         },
       },
     }),
-    new SourceMapDevToolPlugin({
-      filename: "[file].map",
-    }),
-    new ReactRefreshWebpackPlugin({
-      exclude: [/node_modules/, /bootstrap\.tsx$/],
-    }),
   ],
 };
 
-module.exports = merge(commonConfig, devConfig);
+module.exports = merge(commonConfig, prodConfig);

@@ -1,5 +1,5 @@
 {
-  "name": "@kanban-client/root-app",
+  "name": "@kanban-client/kanban",
   "version": "0.0.0",
   "private": true,
   "babelMacros": {
