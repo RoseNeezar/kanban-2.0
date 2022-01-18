@@ -1,6 +1,6 @@
 module.exports = {
   purge: ["./src/**/*.tsx"],
-  darkMode: "class", // or 'media' or 'class'
+  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
       typography: {
@@ -51,6 +51,8 @@ module.exports = {
     },
   },
 
-  variants: {},
+  variants: {
+    extend: {},
+  },
   plugins: [],
 };
