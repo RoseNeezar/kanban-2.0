@@ -9,6 +9,7 @@
     "lint": "lerna run --scope @kanban-server/* lint",
     "bootstrap": "lerna bootstrap --ignore-scripts",
     "add:gateway": "lerna --scope @kanban-server/gateway-service add",
+    "add:task": "lerna --scope @kanban-server/task-service add",
     "add:all": "lerna add"
   },
   "devDependencies": {
