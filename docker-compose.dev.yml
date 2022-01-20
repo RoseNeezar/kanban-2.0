@@ -37,5 +37,17 @@ services:
     volumes:
       - /app/node_modules
       - ./microservices:/app
+  kanban:
+    depends_on:
+      - postgres
+      - redis
+    build:
+      dockerfile: Dockerfile.socket.dev
+      context: ./microservices
+    env_file:
+      - .env
+    volumes:
+      - /app/node_modules
+      - ./microservices:/app
 volumes:
   app:

@@ -14,11 +14,11 @@ export class AppController {
   @Get('/first')
   async testFirstService(): Promise<string> {
     const tasksResponse: any = await firstValueFrom(
-      this.firstClient.send({ cmd: 'ping' }, 'auth-some what so mich cpu'),
+      this.firstClient.send({ cmd: 'ping' }, 'onto todo service'),
     );
 
-    console.log(tasksResponse);
-    return 'first and third and fourth';
+    console.log(tasksResponse, 'sec');
+    return tasksResponse;
   }
 
   @Get('/second')
