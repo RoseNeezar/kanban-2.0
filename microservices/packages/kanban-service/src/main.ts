@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { AppModule } from './app.module';
 import { ConfigService } from './config/config.service';
 
@@ -15,7 +16,11 @@ async function bootstrap() {
   // },
   // );
   // await app.listen();
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.set('trust proxy', 1);
+  app.enableCors();
+
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.REDIS,
     options: {
