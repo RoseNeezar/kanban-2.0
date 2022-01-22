@@ -30,7 +30,7 @@ const App: React.FC = () => {
             </AuthRoute>
           }
         >
-          <Route path="kanban" element={<Kanban />} />
+          <Route path="kanban/*" element={<Kanban />} />
           <Route path="/app" element={<Navigate replace to="kanban" />} />
         </Route>
         <Route path="/" element={<Navigate replace to="/app/kanban" />} />

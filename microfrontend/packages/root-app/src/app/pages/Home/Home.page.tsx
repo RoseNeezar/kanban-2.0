@@ -5,7 +5,7 @@ import { Outlet, useLocation } from "react-router-dom";
 
 const Home: React.FC = () => {
   const location = useLocation();
-  useSocket();
+  // useSocket();
   return (
     <div tw="min-h-screen flex flex-row bg-dark-main">
       <Sidebar />

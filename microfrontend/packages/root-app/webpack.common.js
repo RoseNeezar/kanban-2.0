@@ -8,12 +8,12 @@ module.exports = {
     errorDetails: true,
   },
   resolve: {
-    symlinks: false,
-    fallback: {
-      fs: false,
-      os: false,
-      module: false,
-    },
+    // symlinks: false,
+    // fallback: {
+    //   fs: false,
+    //   os: false,
+    //   module: false,
+    // },
     alias: {
       "@component": path.resolve(srcPath, "component"),
       "@api": path.resolve(srcPath, "api"),
@@ -52,13 +52,6 @@ module.exports = {
         use: [
           {
             loader: "@svgr/webpack",
-          },
-          {
-            loader: "url-loader",
-            options: {
-              limit: 10000,
-              name: "assets/[name].[contenthash:8].[ext]",
-            },
           },
         ],
       },
