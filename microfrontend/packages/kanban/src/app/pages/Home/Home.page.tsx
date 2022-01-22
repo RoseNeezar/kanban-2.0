@@ -6,7 +6,7 @@ const Home: React.FC = () => {
 
   return (
     <div tw="min-h-screen bg-dark-main flex justify-center items-center w-full text-white">
-      Kanban
+      load Kanban reloads agains tier what air one hdeed onde
     </div>
   );
 };

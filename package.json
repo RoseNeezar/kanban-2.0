@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "docker-compose -f docker-compose.dev.yml up -d",
+    "start": "docker-compose -f docker-compose.dev.yml up -d && yarn --cwd ./microfrontend start",
     "build": "docker-compose -f docker-compose.dev.yml  build ",
     "stop": "docker-compose -f docker-compose.dev.yml down && docker-compose -f docker-compose.dev.yml rm -f"
   },
