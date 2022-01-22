@@ -6,14 +6,14 @@ module.exports = {
   stats: {
     errorDetails: true,
   },
-  resolve: {
-    symlinks: false,
-    fallback: {
-      fs: false,
-      os: false,
-      module: false,
-    },
-  },
+  // resolve: {
+  //   symlinks: false,
+  //   fallback: {
+  //     fs: false,
+  //     os: false,
+  //     module: false,
+  //   },
+  // },
   module: {
     rules: [
       {
@@ -24,6 +24,9 @@ module.exports = {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         loader: "babel-loader",
+        options: {
+          plugins: [require.resolve("react-refresh/babel")],
+        },
       },
       {
         test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
@@ -38,13 +41,6 @@ module.exports = {
         use: [
           {
             loader: "@svgr/webpack",
-          },
-          {
-            loader: "url-loader",
-            options: {
-              limit: 10000,
-              name: "assets/[name].[contenthash:8].[ext]",
-            },
           },
         ],
       },

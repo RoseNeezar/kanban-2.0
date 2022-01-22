@@ -27,7 +27,7 @@ const useMount = (
 };
 
 const devRoot = document.querySelector("#_kanban-root");
-
+console.log(devRoot);
 if (devRoot) {
   useMount(devRoot, "app", null);
 }

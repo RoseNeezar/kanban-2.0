@@ -2,8 +2,10 @@ const { merge } = require("webpack-merge");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const commonConfig = require("./webpack.common");
 const deps = require("./package.json").dependencies;
-const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const { SourceMapDevToolPlugin } = require("webpack");
+
+const LiveReloadPlugin = require("webpack-livereload-plugin");
+const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
 
 const devConfig = {
   entry: "./src/index.ts",
@@ -14,15 +16,19 @@ const devConfig = {
   devServer: {
     port: 3000,
     historyApiFallback: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
   plugins: [
+    new LiveReloadPlugin(),
     new ModuleFederationPlugin({
       name: "root-app",
       remotes: {
-        kanban: "kanban@http://localhost:3001/remoteEntry.js",
+        kanban: "kanban@[kanbanUrl]/remoteEntry.js",
       },
       shared: {
         ...deps,
@@ -34,11 +40,9 @@ const devConfig = {
         },
       },
     }),
+    new ExternalTemplateRemotesPlugin(),
     new SourceMapDevToolPlugin({
       filename: "[file].map",
-    }),
-    new ReactRefreshWebpackPlugin({
-      exclude: [/node_modules/, /bootstrap\.tsx$/],
     }),
   ],
 };

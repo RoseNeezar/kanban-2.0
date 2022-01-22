@@ -2,6 +2,7 @@ const { merge } = require("webpack-merge");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const commonConfig = require("./webpack.common");
 const deps = require("./package.json").dependencies;
+
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const devConfig = {
@@ -10,6 +11,9 @@ const devConfig = {
   devServer: {
     port: 3001,
     historyApiFallback: true,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
   },
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
