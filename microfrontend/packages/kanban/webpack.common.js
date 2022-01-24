@@ -1,19 +1,29 @@
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require("path");
+const srcPath = path.join(__dirname, "src/app");
 
 module.exports = {
   stats: {
     errorDetails: true,
   },
-  // resolve: {
-  //   symlinks: false,
-  //   fallback: {
-  //     fs: false,
-  //     os: false,
-  //     module: false,
-  //   },
-  // },
+  resolve: {
+    // symlinks: false,
+    // fallback: {
+    //   fs: false,
+    //   os: false,
+    //   module: false,
+    // },
+    alias: {
+      "@component": path.resolve(srcPath, "component"),
+      "@api": path.resolve(srcPath, "api"),
+      "@pages": path.resolve(srcPath, "pages"),
+      "@store": path.resolve(srcPath, "store"),
+      "@utils": path.resolve(srcPath, "utils"),
+      "@remote": path.resolve(srcPath, "remote"),
+    },
+  },
   module: {
     rules: [
       {
@@ -43,6 +53,11 @@ module.exports = {
             loader: "@svgr/webpack",
           },
         ],
+      },
+      {
+        test: /\.[jt]sx?$/,
+        enforce: "pre",
+        use: ["source-map-loader"],
       },
     ],
   },
