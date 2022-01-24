@@ -3,15 +3,15 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const commonConfig = require("./webpack.common");
 const deps = require("./package.json").dependencies;
 const { SourceMapDevToolPlugin } = require("webpack");
-
-const LiveReloadPlugin = require("webpack-livereload-plugin");
 const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
 const devConfig = {
   entry: "./src/index.ts",
   mode: "development",
   output: {
     publicPath: "/",
+    clean: true,
   },
   devServer: {
     port: 3000,
@@ -23,8 +23,11 @@ const devConfig = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
   },
+  // optimization: {
+  //   runtimeChunk: "single",
+  // },
   plugins: [
-    new LiveReloadPlugin(),
+    // new LiveReloadPlugin(),
     new ModuleFederationPlugin({
       name: "root-app",
       remotes: {
@@ -41,6 +44,9 @@ const devConfig = {
       },
     }),
     new ExternalTemplateRemotesPlugin(),
+    // new ReactRefreshWebpackPlugin({
+    //   exclude: [/node_modules/, /bootstrap\.tsx$/],
+    // }),
     new SourceMapDevToolPlugin({
       filename: "[file].map",
     }),
