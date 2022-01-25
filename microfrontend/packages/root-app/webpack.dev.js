@@ -6,6 +6,9 @@ const { SourceMapDevToolPlugin } = require("webpack");
 const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 
+const LiveReloadPlugin = require("webpack-livereload-plugin");
+const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
+
 const devConfig = {
   entry: "./src/index.ts",
   mode: "development",
@@ -27,7 +30,6 @@ const devConfig = {
   //   runtimeChunk: "single",
   // },
   plugins: [
-    // new LiveReloadPlugin(),
     new ModuleFederationPlugin({
       name: "root-app",
       remotes: {
