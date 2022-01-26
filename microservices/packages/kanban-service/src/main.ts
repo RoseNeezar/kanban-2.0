@@ -5,17 +5,6 @@ import { AppModule } from './app.module';
 import { ConfigService } from './config/config.service';
 
 async function bootstrap() {
-  // const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-  //   AppModule,
-  // {
-  //   transport: Transport.REDIS,
-  //   options: {
-  //     url: new ConfigService().get('url'),
-  //     host: new ConfigService().get('host'),
-  //   },
-  // },
-  // );
-  // await app.listen();
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.set('trust proxy', 1);
