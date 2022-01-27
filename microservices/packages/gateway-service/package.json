@@ -26,12 +26,14 @@
     "@nestjs/core": "^8.0.0",
     "@nestjs/microservices": "^8.2.5",
     "@nestjs/platform-express": "^8.0.0",
+    "faker": "^6.6.6",
     "redis": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
   },
   "devDependencies": {
+    "@kanban2.0/shared": "^1.0.10",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",

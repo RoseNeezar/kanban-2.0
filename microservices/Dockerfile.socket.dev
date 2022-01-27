@@ -6,4 +6,4 @@ COPY lerna.json /app/lerna.json
 RUN yarn
 COPY . .
 
-CMD ["yarn","run","start:dev"]
+CMD ["yarn","run","start:dev-kanban"]

@@ -4,6 +4,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { KanbanGateway } from './gateway/kanban.gateway';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { ListController } from './list/list.controller';
+import { taskController } from './task/task.controller';
+import { BoardController } from './board/board.controller';
 
 @Module({
   imports: [
@@ -15,7 +18,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
       useUnifiedTopology: true,
     }),
   ],
-  controllers: [AppController],
+  controllers: [ListController, taskController, BoardController],
   providers: [AppService, KanbanGateway],
 })
 export class AppModule {}

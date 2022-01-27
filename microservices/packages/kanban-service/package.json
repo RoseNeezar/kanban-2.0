@@ -29,6 +29,7 @@
     "@nestjs/platform-socket.io": "^8.2.5",
     "@nestjs/websockets": "^8.2.5",
     "@typegoose/typegoose": "6.5.0",
+    "faker": "^6.6.6",
     "mongoose": "5.10.4",
     "nestjs-typegoose": "7.1.8",
     "redis": "^3.0.2",
@@ -38,6 +39,7 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
+    "@kanban2.0/shared": "^1.0.10",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",

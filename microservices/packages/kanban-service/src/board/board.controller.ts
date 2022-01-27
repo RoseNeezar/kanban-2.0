@@ -1,45 +1,36 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-
+import { KanbanEvent } from '@kanban2.0/shared';
+import { Controller } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { Types } from 'mongoose';
 import { User } from 'src/models/user.model';
-import { ICreateBoard, IUpdateListOrder } from './board.dto';
+import { ICreateBoard } from './board.dto';
 import { BoardService } from './board.service';
 
-@Controller('api/boards')
+const user: User = {
+  token: 'tokenNews',
+  username: 'useruser',
+};
+@Controller()
 export class BoardController {
   constructor(private boardService: BoardService) {}
 
-  @Get('/all')
-  getAllBoards() {
-    return this.boardService.getAllBoards(User);
+  @MessagePattern({ cmd: KanbanEvent.getAllBoards })
+  getAllBoards(data: string) {
+    return this.boardService.getAllBoards(user);
   }
 
-  @Post('/')
-  createBoard(@Body() boardDto: ICreateBoard) {
-    return this.boardService.createBoard(boardDto, User);
+  @MessagePattern({ cmd: KanbanEvent.createBoard })
+  createBoard(boardDto: ICreateBoard) {
+    return this.boardService.createBoard(boardDto, user);
   }
 
-  @Patch('/')
-  updateListOrder(@Body() boardDto: IUpdateListOrder) {
-    return this.boardService.updateListOrder(boardDto);
-  }
-
-  @Get('/:boardId')
-  getBoard(@Param('boardId') boardId: Types.ObjectId) {
+  @MessagePattern({ cmd: KanbanEvent.getBoard })
+  getBoard(boardId: Types.ObjectId) {
     return this.boardService.getBoard({ boardId });
   }
 
-  @Delete('/:boardId')
-  deleteBoard(@Param('boardId') boardId: Types.ObjectId) {
+  @MessagePattern({ cmd: KanbanEvent.deleteBoard })
+  deleteBoard(boardId: Types.ObjectId) {
     return this.boardService.deleteBoard({ boardId });
   }
 }

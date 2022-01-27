@@ -7,14 +7,14 @@ services:
       context: ./nginx-server
     ports:
       - "3030:80"
-  postgres:
-    image: "postgres:latest"
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=postgres
-      - POSTGRES_PASSWORD=postgres_password
+  # postgres:
+  #   image: "postgres:latest"
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_DB=postgres
+  #     - POSTGRES_PASSWORD=postgres_password
   mongo:
     image: "mongo:latest"
     command: mongod

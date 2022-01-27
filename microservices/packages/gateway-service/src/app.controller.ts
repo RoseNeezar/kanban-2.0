@@ -7,7 +7,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    @Inject('TASK_SERVICE') private readonly firstClient: ClientProxy,
+    @Inject('KANBAN_SERVICE') private readonly firstClient: ClientProxy,
     @Inject('CALENDAR_SERVICE') private readonly secondClient: ClientProxy,
   ) {}
 
