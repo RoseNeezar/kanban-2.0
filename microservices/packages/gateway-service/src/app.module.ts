@@ -19,7 +19,7 @@ import { ConfigService } from './config/config.service';
       inject: [ConfigService],
     },
     {
-      provide: 'TASK_SERVICE',
+      provide: 'KANBAN_SERVICE',
       useFactory: (configService: ConfigService) => {
         return ClientProxyFactory.create(configService.get('taskService'));
       },

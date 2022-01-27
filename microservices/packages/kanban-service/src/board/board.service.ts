@@ -51,8 +51,18 @@ export class BoardService {
       throw new BadRequestException(ErrorSanitizer(error));
     }
   }
+
   async createBoard(boardDto: ICreateBoard, userId: mongoId) {
     const { title } = boardDto;
+
+    const existingBoard = await this.boardModel.find({
+      title,
+    });
+
+    if (existingBoard.length > 0) {
+      throw new BadRequestException('Board already existed !');
+    }
+
     try {
       const result = await this.boardModel.create({
         user: userId,
@@ -64,6 +74,7 @@ export class BoardService {
       throw new BadRequestException(ErrorSanitizer(error));
     }
   }
+
   async updateListOrder(boardDto: IUpdateListOrder) {
     const { boardId, newListOrder } = boardDto;
     try {
