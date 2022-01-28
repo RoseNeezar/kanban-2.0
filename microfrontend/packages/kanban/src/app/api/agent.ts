@@ -1,58 +1,62 @@
-import axios, { AxiosError, AxiosResponse } from 'axios'
-import { toast } from 'react-toastify'
-import { IAuth, IToken } from '../store/types/auth.types'
+import queryString from "query-string";
+import { ajax } from "rxjs/ajax";
 
-axios.defaults.baseURL = 'http://localhost:3030'
+const baseURL = "/";
 
-axios.interceptors.request.use(config => {
-  // const token = store.commonStore.token;
-  // if (token) config.headers.Authorization = `Bearer ${token}`
-  return config
-})
+const requestRxjs = {
+  get: <T>(url: string) =>
+    ajax<T>({
+      url: `${baseURL}${url}`,
+      method: "GET",
+      withCredentials: true,
+    }),
+  post: <T>(url: string, body?: {}) =>
+    ajax<T>({
+      url: `${baseURL}${url}`,
+      method: "POST",
+      withCredentials: true,
+      body,
+    }),
+  put: <T>(url: string, body?: {}) =>
+    ajax<T>({
+      url: `${baseURL}${url}`,
+      method: "PUT",
+      withCredentials: true,
+      body,
+    }),
+  del: <T>(url: string) =>
+    ajax<T>({
+      url: `${baseURL}${url}`,
+      method: "DELETE",
+      withCredentials: true,
+    }),
+};
 
-axios.interceptors.response.use(undefined, (error: AxiosError) => {
-  const { data, status, config, headers } = error.response!
-  switch (status) {
-    case 400:
-      if (data.error) {
-        console.log(data, data.message[0])
-        toast.error(data.message[0])
-      }
-      break
-    case 401:
-      if (
-        status === 401 &&
-        headers['www-authenticate']?.startsWith('Bearer error="invalid_token"')
-      ) {
-        toast.error('Session expired - please login again')
-      }
-      break
-  }
-  return Promise.reject(error)
-})
-
-const responseBody = <T>(response: AxiosResponse<T>) => response.data
-
-const requests = {
-  get: <T>(url: string, params?: any) =>
-    axios
-      .get<T>(url, {
-        params
+const kanbanService = {
+  sendMessage: (data: { content: string; chatId: string }) =>
+    requestRxjs.post<any>(queryString.stringifyUrl({ url: "message" }), {
+      content: data.content,
+      chatId: data.chatId,
+    }),
+  getChatMessagesChatId: (data: {
+    chatId: string;
+    page: number;
+    limit: number;
+  }) =>
+    requestRxjs.get<any>(
+      queryString.stringifyUrl({
+        url: `chats/${data.chatId}/messages`,
+        query: data,
       })
-      .then(responseBody),
-  post: <T>(url: string, body: {}) =>
-    axios.post<T>(url, body).then(responseBody),
-  put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
-  del: <T>(url: string) => axios.delete<T>(url).then(responseBody)
-}
-
-const Auth = {
-  login: (data: IAuth) => requests.post<IToken>(`/auth/signin`, data),
-  signup: (data: IAuth) => requests.post<IToken>(`/auth/signup`, data)
-}
+    ),
+  markReadChatMessagesChatId: (data: string) =>
+    requestRxjs.put<void>(
+      queryString.stringifyUrl({ url: `chats/${data}/messages/markAsRead` })
+    ),
+};
 
 const agent = {
-  Auth
-}
+  kanbanService,
+};
 
-export default agent
+export default agent;

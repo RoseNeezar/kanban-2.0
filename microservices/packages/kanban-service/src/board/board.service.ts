@@ -58,7 +58,8 @@ export class BoardService {
     const existingBoard = await this.boardModel.find({
       title,
     });
-
+    console.log('existingBoard');
+    console.log(existingBoard);
     if (existingBoard.length > 0) {
       throw new BadRequestException('Board already existed !');
     }
@@ -71,6 +72,7 @@ export class BoardService {
       });
       return { result };
     } catch (error) {
+      console.log(error);
       throw new BadRequestException(ErrorSanitizer(error));
     }
   }

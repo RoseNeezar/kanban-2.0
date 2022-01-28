@@ -15,7 +15,7 @@ const App: React.FC<{ routePrefix: string }> = ({ routePrefix }) => {
   return (
     <React.Suspense fallback={<h1>Loading...</h1>}>
       <Routes location={state?.backgroundLocation || location}>
-        <Route path={`${routePrefix}/kanban`} element={<Kanban />} />
+        <Route path={`${routePrefix}/kanban`} element={<Home />} />
         <Route
           path="/"
           element={<Navigate replace to={`${routePrefix}/kanban`} />}
