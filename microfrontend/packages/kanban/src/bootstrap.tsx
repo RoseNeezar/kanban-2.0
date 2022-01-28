@@ -6,6 +6,8 @@ import App from "./App";
 import CustomRouter from "./app/utils/CustomRouter";
 import GlobalStyles from "./styles/GlobalStyles";
 import "react-toastify/dist/ReactToastify.min.css";
+import { store } from "@store/store";
+import { Provider } from "react-redux";
 
 export const useHistory = createBrowserHistory();
 
@@ -16,11 +18,13 @@ const useMount = (
 ) => {
   ReactDOM.render(
     <React.StrictMode>
-      <GlobalStyles />
-      <ToastContainer position="top-right" hideProgressBar />
-      <CustomRouter history={useHistory}>
-        <App routePrefix={routePrefix} />
-      </CustomRouter>
+      <Provider store={store}>
+        <GlobalStyles />
+        <ToastContainer position="top-right" hideProgressBar />
+        <CustomRouter history={useHistory}>
+          <App routePrefix={routePrefix} />
+        </CustomRouter>
+      </Provider>
     </React.StrictMode>,
     el
   );

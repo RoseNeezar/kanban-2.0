@@ -35,7 +35,8 @@ services:
       - 6389:6389
   api:
     depends_on:
-      - postgres
+      # - postgres
+      - mongo
       - redis
     build:
       dockerfile: Dockerfile.dev
@@ -47,7 +48,8 @@ services:
       - ./microservices:/app
   kanban:
     depends_on:
-      - postgres
+      # - postgres
+      - mongo
       - redis
     build:
       dockerfile: Dockerfile.socket.dev

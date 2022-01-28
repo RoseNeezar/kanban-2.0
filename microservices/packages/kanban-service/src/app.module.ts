@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { TypegooseModule } from 'nestjs-typegoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { BoardModule } from './board/board.module';
 import { KanbanGateway } from './gateway/kanban.gateway';
-import { TypegooseModule } from 'nestjs-typegoose';
-import { ListController } from './list/list.controller';
-import { taskController } from './task/task.controller';
-import { BoardController } from './board/board.controller';
+import { ListModule } from './list/list.module';
+import { taskModule } from './task/task.module';
 
 @Module({
   imports: [
@@ -17,8 +17,11 @@ import { BoardController } from './board/board.controller';
       useFindAndModify: false,
       useUnifiedTopology: true,
     }),
+    ListModule,
+    taskModule,
+    BoardModule,
   ],
-  controllers: [ListController, taskController, BoardController],
+  controllers: [AppController],
   providers: [AppService, KanbanGateway],
 })
 export class AppModule {}

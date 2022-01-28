@@ -1,4 +1,4 @@
-import initialData from "@pages/Home/component/initial-data";
+import initialData from "@pages/Home/components/initial-data";
 import { toast } from "react-toastify";
 import create from "zustand";
 import { useHistory } from "../../bootstrap";

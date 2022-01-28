@@ -4,10 +4,11 @@ import { ClientProxyFactory } from '@nestjs/microservices';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigService } from './config/config.service';
+import { KanbanController } from './kanban.controller';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
-  controllers: [AppController],
+  controllers: [AppController, KanbanController],
   providers: [
     AppService,
     ConfigService,
