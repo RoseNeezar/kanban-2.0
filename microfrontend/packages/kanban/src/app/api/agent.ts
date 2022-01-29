@@ -1,7 +1,7 @@
 import queryString from "query-string";
 import { ajax } from "rxjs/ajax";
 
-const baseURL = "/";
+const baseURL = "http://127.0.0.1:3030/api/kanban";
 
 const requestRxjs = {
   get: <T>(url: string) =>
