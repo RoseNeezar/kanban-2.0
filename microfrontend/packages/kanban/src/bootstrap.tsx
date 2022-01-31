@@ -14,7 +14,7 @@ export const useHistory = createBrowserHistory();
 const useMount = (
   el: ReactDOM.Container,
   routePrefix: string,
-  authStore: any
+  useRemoteStore: any
 ) => {
   ReactDOM.render(
     <React.StrictMode>
@@ -22,7 +22,7 @@ const useMount = (
         <GlobalStyles />
         <ToastContainer position="top-right" hideProgressBar />
         <CustomRouter history={useHistory}>
-          <App routePrefix={routePrefix} />
+          <App routePrefix={routePrefix} useRemoteStore={useRemoteStore} />
         </CustomRouter>
       </Provider>
     </React.StrictMode>,
@@ -31,11 +31,9 @@ const useMount = (
 };
 
 const devRoot = document.querySelector("#_kanban-root");
-console.log(devRoot);
+
 if (devRoot) {
   useMount(devRoot, "app", null);
 }
 
-// We are running through root app
-// and we should export the mount function
 export { useMount };
