@@ -22,7 +22,7 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@component/*": ["src/app/component/*"],
+      "@components/*": ["src/app/components/*"],
       "@api/*": ["src/app/api/*"],
       "@pages/*": ["src/app/pages/*"],
       "@store/*": ["src/app/store/*"],

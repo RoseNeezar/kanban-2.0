@@ -1,4 +1,4 @@
-import InputGroup from "@component/Input";
+import InputGroup from "@components/Input";
 import { Dialog, Transition } from "@headlessui/react";
 import { useAuthStore } from "@store/useAuth.store";
 import { errorHelper } from "@utils/errorHelper";
