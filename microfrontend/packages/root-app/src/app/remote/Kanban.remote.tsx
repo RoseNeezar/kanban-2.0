@@ -1,4 +1,4 @@
-import { useAuthStore } from "@store/useAuth.store";
+import { useRemoteStore } from "@store/useRemoteStore";
 import { useMount } from "kanban/Kanban";
 import * as React from "react";
 
@@ -8,7 +8,7 @@ const Kanban = () => {
   React.useEffect(() => {
     if (!ref.current) return;
     // console.log(ref.current, useMount)
-    useMount(ref.current, "app", useAuthStore);
+    useMount(ref.current, "app", useRemoteStore);
   }, []);
 
   return <div ref={ref} />;
