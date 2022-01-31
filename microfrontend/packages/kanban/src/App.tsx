@@ -24,10 +24,7 @@ const App: React.FC<{ routePrefix: string; useRemoteStore?: any }> = ({
       <Routes location={state?.backgroundLocation || location}>
         <Route path={`${routePrefix}/kanban`} element={<Home />} />
 
-        <Route
-          path={`${routePrefix}/kanban/board`}
-          element={<Kanban useRemoteStore={useRemoteStore} />}
-        />
+        <Route path={`${routePrefix}/kanban/board`} element={<Kanban />} />
         <Route
           path="/"
           element={<Navigate replace to={`${routePrefix}/kanban/`} />}
