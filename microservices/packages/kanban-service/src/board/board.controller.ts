@@ -16,7 +16,10 @@ export class BoardController {
 
   @MessagePattern({ cmd: KanbanEvent.getAllBoards })
   getAllBoards(data: string) {
-    return this.boardService.getAllBoards(user);
+    console.log('getAllBoards--', user);
+    return this.boardService.getAllBoards(
+      Types.ObjectId('4edd40c86762e0fb12000003'),
+    );
   }
 
   @MessagePattern({ cmd: KanbanEvent.createBoard })

@@ -20,7 +20,9 @@ export class KanbanController {
 
   @Get('/all')
   getAllBoards() {
-    return this.kanbanService.send({ cmd: KanbanEvent.getAllBoards }, null);
+    console.log('getAllBoards--gateway');
+
+    return this.kanbanService.send({ cmd: KanbanEvent.getAllBoards }, 'user');
   }
 
   @Post('/')

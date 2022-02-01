@@ -7,9 +7,6 @@ import { ConfigService } from './config/config.service';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
-  app.set('trust proxy', 1);
-  app.enableCors();
-
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.REDIS,
     options: {
@@ -19,6 +16,7 @@ async function bootstrap() {
   });
 
   await app.startAllMicroservices();
+
   await app.listen(5010);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
