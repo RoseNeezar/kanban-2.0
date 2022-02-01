@@ -1,6 +1,7 @@
 import { AnyAction, combineReducers, configureStore } from "@reduxjs/toolkit";
 import { combineEpics, createEpicMiddleware, Epic } from "redux-observable";
 import { catchError } from "rxjs/operators";
+import errorSlice from "./module/error/error.slice";
 import kanbanEpic from "./module/kanban/kanban.epic";
 import kanbanSlice from "./module/kanban/kanban.slice";
 
@@ -8,6 +9,7 @@ export type MyEpic = Epic<AnyAction, AnyAction, RootState>;
 
 export const reducer = combineReducers({
   kanban: kanbanSlice,
+  error: errorSlice,
 });
 
 export type ReducerState = ReturnType<typeof reducer>;

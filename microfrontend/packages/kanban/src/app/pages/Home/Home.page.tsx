@@ -1,25 +1,41 @@
-import { useAppSelector } from "@store/hooks/hooks";
+import useFormInput from "@shared-hooks/useFormInput";
+import { useAppDispatch, useAppSelector } from "@store/hooks/hooks";
+import { createBoard, fetchBoards } from "@store/module/kanban/kanban.slice";
 import { RootState } from "@store/store";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const KanbanBoards = useAppSelector(
     (state: RootState) => state.kanban.boards
   );
-  const [boardTitle, setBoardTitle] = useState("");
+  const dispatch = useAppDispatch();
   const [errors, setErrors] = useState<any>({});
-  const [formState, setFormState] = useState({
-    username: "",
-    password: "",
+
+  const {
+    onChangeText,
+    resetText,
+    fields: { title },
+  } = useFormInput({
+    title: "",
   });
-  const { username, password } = formState;
 
-  const onChangeText =
-    (name: string) =>
-    (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setFormState({ ...formState, [name]: e.target.value });
-    };
+  const HandleCreateBoard = async () => {
+    console.log("tit-0", title);
+    dispatch(
+      createBoard({
+        title,
+      })
+    );
+    resetText("title");
+    console.log("tit-1", title);
+  };
 
+  useEffect(() => {
+    dispatch(fetchBoards());
+  }, []);
+  console.log("Home", KanbanBoards);
   return (
     <div tw="flex flex-col items-center justify-center w-full mt-10 overflow-hidden  ">
       <div tw="flex flex-col items-center ">
@@ -27,12 +43,12 @@ const Home = () => {
         <div tw="flex flex-row items-center">
           <input
             tw="p-2 mt-8 mb-8 rounded-md w-96"
-            value={boardTitle}
-            onChange={(e) => setBoardTitle(e.target.value)}
-            onKeyDown={(e) => {}}
+            type="title"
+            value={title}
+            onChange={onChangeText("title")}
           />
           <button
-            onClick={() => {}}
+            onClick={() => HandleCreateBoard()}
             tw="w-20 h-10 ml-4 cursor-pointer hover:bg-dark-second rounded-xl bg-dark-third text-dark-txt"
           >
             Create
@@ -41,7 +57,7 @@ const Home = () => {
       </div>
 
       <div tw="grid justify-center w-full grid-flow-row gap-10 overflow-scroll auto-rows-min grid-rows-min grid-cols-fit">
-        {KanbanBoards.filter((fil) => fil.title !== "").map((res) => (
+        {KanbanBoards.filter((fil: any) => fil.title !== "").map((res: any) => (
           <div tw="p-2 rounded-md bg-dark-third" key={res._id}>
             <div tw="flex justify-end ">
               <button
@@ -57,6 +73,7 @@ const Home = () => {
               onClick={() => res._id}
             >
               {res.title}
+              <h1 tw="text-white bg-red-500">{res._id}</h1>
             </button>
           </div>
         ))}

@@ -12,12 +12,15 @@ const kanbanSlice = createSlice({
   name: "kanban",
   initialState,
   reducers: {
-    createBoard: (state, action: PayloadAction<any>) => {
-      state.boards = action.payload;
+    fetchBoards: (state) => {},
+    createBoard: (state, action: PayloadAction<{ title: string }>) => {},
+    addBoard: (state, action: PayloadAction<any>) => {
+      console.log("slice", action.payload.boards);
+      state.boards = action.payload.boards;
     },
   },
 });
 
-export const { createBoard } = kanbanSlice.actions;
+export const { fetchBoards, createBoard, addBoard } = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;

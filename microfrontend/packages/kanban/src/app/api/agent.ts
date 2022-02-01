@@ -32,31 +32,29 @@ const requestRxjs = {
     }),
 };
 
-const kanbanService = {
-  sendMessage: (data: { content: string; chatId: string }) =>
-    requestRxjs.post<any>(queryString.stringifyUrl({ url: "message" }), {
-      content: data.content,
-      chatId: data.chatId,
+const boardService = {
+  createBoard: (data: { boardTitle: string }) =>
+    requestRxjs.post<any>(queryString.stringifyUrl({ url: "" }), {
+      title: data.boardTitle,
     }),
-  getChatMessagesChatId: (data: {
-    chatId: string;
-    page: number;
-    limit: number;
-  }) =>
+  getAllBoards: () =>
+    requestRxjs.get<void>(queryString.stringifyUrl({ url: `/all` })),
+  getBoard: (boardId: string) =>
     requestRxjs.get<any>(
       queryString.stringifyUrl({
-        url: `chats/${data.chatId}/messages`,
-        query: data,
+        url: `/${boardId}`,
       })
     ),
-  markReadChatMessagesChatId: (data: string) =>
-    requestRxjs.put<void>(
-      queryString.stringifyUrl({ url: `chats/${data}/messages/markAsRead` })
+  deleteBoard: (boardId: string) =>
+    requestRxjs.del<any>(
+      queryString.stringifyUrl({
+        url: `/${boardId}`,
+      })
     ),
 };
 
 const agent = {
-  kanbanService,
+  boardService,
 };
 
 export default agent;
