@@ -33,14 +33,14 @@ export class BoardService {
       throw new BadRequestException(ErrorSanitizer(error));
     }
   }
-  async getAllBoards(userId: mongoId) {
+  async getAllBoards(userId: string) {
     try {
       const boards = await this.boardModel
         .find({ user: userId })
         .select('kanbanListOrder title _id');
       if (boards.length === 0) {
         const emptyBoard: Board = {
-          user: userId,
+          userId,
           title: '',
           kanbanListOrder: [],
         };

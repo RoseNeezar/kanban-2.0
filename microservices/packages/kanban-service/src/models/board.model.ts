@@ -1,6 +1,5 @@
 import { modelOptions, prop, Ref } from '@typegoose/typegoose';
 import { List } from './list.model';
-import { User } from './user.model';
 
 @modelOptions({
   schemaOptions: {
@@ -17,8 +16,6 @@ export class Board {
   })
   kanbanListOrder: Ref<List>[];
 
-  @prop({
-    ref: 'User',
-  })
-  user: Ref<User>;
+  @prop({ required: [true, 'missing userId!'] })
+  userId: string;
 }
