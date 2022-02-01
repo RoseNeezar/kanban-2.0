@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const navigate = useNavigate();
-  const { login } = useAuthStore();
   const [errors, setErrors] = useState<any>({});
 
   const [formState, setFormState] = useState({
@@ -19,14 +18,15 @@ const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const onChangeText =
     (name: string) =>
     (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      console.log({ ...formState }, name);
       setFormState({ ...formState, [name]: e.target.value });
     };
 
   const handleSubmit = async () => {
-    await login({
-      username,
-      password,
-    });
+    // await login({
+    //   username,
+    //   password,
+    // });
   };
 
   const onDismiss = () => {
