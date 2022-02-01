@@ -17,6 +17,7 @@ module.exports = {
     // },
     alias: {
       "@component": path.resolve(srcPath, "component"),
+      "@shared-hooks": path.resolve(srcPath, "shared-hooks"),
       "@api": path.resolve(srcPath, "api"),
       "@pages": path.resolve(srcPath, "pages"),
       "@store": path.resolve(srcPath, "store"),
