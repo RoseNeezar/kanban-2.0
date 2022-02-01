@@ -6,6 +6,12 @@ export class ConfigService {
     this.envConfig = {};
     this.envConfig.port = process.env.API_GATEWAY_PORT;
 
+    this.envConfig.authService = {
+      options: {
+        url: process.env.AUTH_MICROSERVICE_URL,
+      },
+      transport: Transport.REDIS,
+    };
     this.envConfig.calendarService = {
       options: {
         url: process.env.CALENDAR_MICROSERVICE_URL,

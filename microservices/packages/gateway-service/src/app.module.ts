@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { ClientProxyFactory } from '@nestjs/microservices';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigService } from './config/config.service';
 import { KanbanController } from './kanban.controller';
+import { AuthGuard } from './services/guards/authorization.guard';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
@@ -12,6 +14,13 @@ import { KanbanController } from './kanban.controller';
   providers: [
     AppService,
     ConfigService,
+    {
+      provide: 'AUTH_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        return ClientProxyFactory.create(configService.get('authService'));
+      },
+      inject: [ConfigService],
+    },
     {
       provide: 'CALENDAR_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -25,6 +34,10 @@ import { KanbanController } from './kanban.controller';
         return ClientProxyFactory.create(configService.get('taskService'));
       },
       inject: [ConfigService],
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
     },
   ],
 })

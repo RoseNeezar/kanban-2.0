@@ -9,6 +9,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import { Authorization } from './decorators/authorization.decorator';
 
 type IboardId = Pick<IUpdateListOrder, 'boardId'>['boardId'];
 
@@ -19,9 +20,8 @@ export class KanbanController {
   ) {}
 
   @Get('/all')
+  @Authorization(true)
   getAllBoards() {
-    console.log('getAllBoards--gateway');
-
     return this.kanbanService.send({ cmd: KanbanEvent.getAllBoards }, 'user');
   }
 
