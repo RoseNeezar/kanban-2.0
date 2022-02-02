@@ -580,10 +580,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@kanban2.0/shared@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@kanban2.0/shared/-/shared-1.0.11.tgz#71fb8e102d1093a4caf4a6d9ea65fa80b3fdddc4"
-  integrity sha512-mi67GRwRAASBk2wPsAWoSmEepPKPoj0N9po1gojM9t+07YQf9ocscyhdr4Wz6T0Bs/EtHHuTEAwsm8yrato28w==
+"@kanban2.0/shared@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.yarnpkg.com/@kanban2.0/shared/-/shared-1.0.15.tgz#07a961c902e9caf970a1c28b3ba1a7463798d854"
+  integrity sha512-kbJjsP2Ft7m3o+brXqAhxJK/aSYdw9kZoOneqLXs3Xx/srvupjpKw47M92WvRFln8ggPfg9901jAPocX0GRByA==
   dependencies:
     "@nestjs/config" "^1.1.6"
     "@nestjs/microservices" "^8.2.5"

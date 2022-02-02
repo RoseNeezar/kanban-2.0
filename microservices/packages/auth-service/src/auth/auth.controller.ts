@@ -13,9 +13,7 @@ export class AuthController {
   }
 
   @MessagePattern({ cmd: AuthEvent.login })
-  login(
-    authCredentialDto: Omit<IUser, 'email'> & { password: string },
-  ): Promise<any> {
+  login(authCredentialDto: Omit<IUser, 'email'> & { password: string }) {
     return this.authService.login(authCredentialDto);
   }
 
