@@ -4,13 +4,14 @@ import { APP_GUARD } from '@nestjs/core';
 import { ClientProxyFactory } from '@nestjs/microservices';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthController } from './auth.controller';
 import { ConfigService } from './config/config.service';
 import { KanbanController } from './kanban.controller';
 import { AuthGuard } from './services/guards/authorization.guard';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
-  controllers: [AppController, KanbanController],
+  controllers: [AppController, KanbanController, AuthController],
   providers: [
     AppService,
     ConfigService,

@@ -1,39 +1,27 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Res,
-  UseGuards,
-  ValidationPipe,
-} from '@nestjs/common';
-import { Request, Response } from 'express';
-import { AuthCredentialDto } from './auth.dto';
-import { AuthService } from './auth.service';
-import { GetUser } from './get-user.decorator';
-import { AuthEvent } from '@kanban2.0/shared';
+import { AuthEvent, IUser } from '@kanban2.0/shared';
+import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
+import { AuthService } from './auth.service';
 
 @Controller()
 export class AuthController {
   constructor(private authService: AuthService) {}
 
   @MessagePattern({ cmd: AuthEvent.register })
-  register(@Body(ValidationPipe) authCredentialDto: AuthCredentialDto) {
+  register(authCredentialDto: IUser & { password: string }) {
     return this.authService.register(authCredentialDto);
   }
 
   @MessagePattern({ cmd: AuthEvent.login })
   login(
-    @Res() res: Response,
-    @Body(ValidationPipe) authCredentialDto: Omit<AuthCredentialDto, 'email'>,
+    authCredentialDto: Omit<IUser, 'email'> & { password: string },
   ): Promise<any> {
-    return this.authService.login(authCredentialDto, res);
+    return this.authService.login(authCredentialDto);
   }
 
   @MessagePattern({ cmd: AuthEvent.logout })
-  logout(@Res() res: Response) {
-    return this.authService.logout(res);
+  logout(data: string) {
+    return this.authService.logout(data);
   }
 
   @MessagePattern({ cmd: AuthEvent.verifyToken })
@@ -43,6 +31,6 @@ export class AuthController {
 
   @MessagePattern({ cmd: AuthEvent.getUserByToken })
   getUserByToken(userId: any) {
-    return this.authService.customGetUserById(userId);
+    return this.authService.getUserById(userId);
   }
 }

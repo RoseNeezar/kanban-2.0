@@ -16,6 +16,7 @@ module.exports = {
     // },
     alias: {
       "@components": path.resolve(srcPath, "components"),
+      "@shared-hooks": path.resolve(srcPath, "shared-hooks"),
       "@api": path.resolve(srcPath, "api"),
       "@pages": path.resolve(srcPath, "pages"),
       "@store": path.resolve(srcPath, "store"),
@@ -52,6 +53,13 @@ module.exports = {
         use: [
           {
             loader: "@svgr/webpack",
+          },
+          {
+            loader: "url-loader",
+            options: {
+              limit: 10000,
+              name: "assets/[name].[contenthash:8].[ext]",
+            },
           },
         ],
       },

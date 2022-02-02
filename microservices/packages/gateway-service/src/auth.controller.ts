@@ -1,17 +1,18 @@
+import { AuthEvent, IUser } from '@kanban2.0/shared';
 import {
+  BadRequestException,
   Body,
   Controller,
-  Delete,
   Get,
   Inject,
-  Param,
   Post,
   Res,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { GetUser } from './decorators/get-user.decorator';
-import { IUser, AuthEvent } from '@kanban2.0/shared';
+import { Response } from 'express';
+import { firstValueFrom } from 'rxjs';
 import { Authorization } from './decorators/authorization.decorator';
+import { GetUser } from './decorators/get-user.decorator';
 
 @Controller('api/auth')
 export class AuthController {
@@ -20,24 +21,59 @@ export class AuthController {
   ) {}
 
   @Post('/register')
-  register(@Body() authCredentialDto: IUser) {
-    return this.authService.send(
-      { cmd: AuthEvent.register },
-      authCredentialDto,
-    );
+  async register(
+    @Res() res: Response,
+    @Body() authCredentialDto: IUser & { password: string },
+  ) {
+    try {
+      const registerData = await firstValueFrom(
+        this.authService.send({ cmd: AuthEvent.register }, authCredentialDto),
+      );
+
+      const { result, cookie } = registerData;
+      res.setHeader('Set-Cookie', cookie);
+      result.password = undefined;
+      return res.send(result);
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 
   @Post('/login')
-  login(@Res() res: Response, @Body() authCredentialDto: Omit<IUser, 'email'>) {
-    return this.authService.send(
-      { cmd: AuthEvent.login },
-      { authCredentialDto, res },
-    );
+  async login(
+    @Res() res: Response,
+    @Body() authCredentialDto: Omit<IUser, 'email'>,
+  ) {
+    try {
+      const loginData = await firstValueFrom(
+        this.authService.send({ cmd: AuthEvent.login }, authCredentialDto),
+      );
+
+      const { user, cookie } = loginData;
+      res.setHeader('Set-Cookie', cookie);
+      user.password = undefined;
+      return res.send(user);
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 
   @Post('/logout')
-  logout(@Res() res: Response) {
-    return this.authService.send({ cmd: AuthEvent.logout }, res);
+  async logout(@Res({ passthrough: true }) res: Response) {
+    try {
+      const loginData = await firstValueFrom(
+        this.authService.send({ cmd: AuthEvent.logout }, 'success'),
+      );
+
+      const { data, logoutCookie } = loginData;
+      res.setHeader('Set-Cookie', logoutCookie);
+
+      return {
+        success: data,
+      };
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 
   @Get('/me')

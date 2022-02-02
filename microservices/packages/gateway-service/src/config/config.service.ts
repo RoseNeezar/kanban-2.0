@@ -5,7 +5,6 @@ export class ConfigService {
   constructor() {
     this.envConfig = {};
     this.envConfig.port = process.env.API_GATEWAY_PORT;
-
     this.envConfig.authService = {
       options: {
         url: process.env.AUTH_MICROSERVICE_URL,

@@ -1,5 +1,5 @@
 {
-  "name": "auth-service",
+  "name": "@kanban-server/auth-service",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -49,10 +49,10 @@
     "@typegoose/typegoose": "6.5.0",
     "mongoose": "5.10.4",
     "nestjs-typegoose": "7.1.8",
-    "validator": "^13.6.0",
-    "@kanban2.0/shared": "^1.0.11"
+    "validator": "^13.6.0"
   },
   "devDependencies": {
+    "@kanban2.0/shared": "^1.0.11",
     "@types/bcryptjs": "^2.4.2",
     "@types/cookie": "^0.4.0",
     "@nestjs/cli": "^8.0.0",

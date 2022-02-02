@@ -23,6 +23,11 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=example
+  auth_redis:
+    image: "redis:6.2-alpine"
+    command: --port 6369
+    ports:
+      - 6369:6369
   task_redis:
     image: "redis:6.2-alpine"
     command: --port 6379
