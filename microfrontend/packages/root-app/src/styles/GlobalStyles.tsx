@@ -1,7 +1,46 @@
-import { css, Global } from '@emotion/react'
-import { GlobalStyles as BaseStyles } from 'twin.macro'
+import { css, Global } from "@emotion/react";
+import { GlobalStyles as BaseStyles } from "twin.macro";
 
 const customStyles = css`
+  .pulse {
+    display: block;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(99, 102, 241);
+    cursor: pointer;
+    box-shadow: 0 0 0 rgba(99, 102, 241, 0.4);
+    animation: pulse 2s infinite;
+  }
+  .pulse:hover {
+    animation: none;
+  }
+
+  @-webkit-keyframes pulse {
+    0% {
+      -webkit-box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    70% {
+      -webkit-box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+    }
+    100% {
+      -webkit-box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+  }
+  @keyframes pulse {
+    0% {
+      -moz-box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+    }
+    70% {
+      -moz-box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+      box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+    }
+    100% {
+      -moz-box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+    }
+  }
   .slide-in-bottom {
     -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)
       both;
@@ -172,7 +211,7 @@ const customStyles = css`
       opacity: 1;
     }
   }
-`
+`;
 
 const GlobalStyles = () => {
   return (
@@ -180,7 +219,7 @@ const GlobalStyles = () => {
       <BaseStyles />
       <Global styles={customStyles} />
     </div>
-  )
-}
+  );
+};
 
-export default GlobalStyles
+export default GlobalStyles;
