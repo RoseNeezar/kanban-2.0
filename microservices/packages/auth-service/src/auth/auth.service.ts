@@ -1,13 +1,12 @@
 import {
-  BadRequestException,
   ConflictException,
   HttpException,
   HttpStatus,
   Injectable,
-  InternalServerErrorException,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ReturnModelType } from '@typegoose/typegoose';
+import { DocumentType, ReturnModelType } from '@typegoose/typegoose';
 import * as bcrypt from 'bcryptjs';
 import * as cookie from 'cookie';
 import { Response } from 'express';
@@ -15,7 +14,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { User } from 'src/models/user.model';
 import { AuthCredentialDto, TokenPayload } from './auth.dto';
 import * as jwt from 'jsonwebtoken';
-import { IUser } from '@kanban2.0/shared';
+import { asyncHandler, AuthEventResponse, IUser } from '@kanban2.0/shared';
 
 @Injectable()
 export class AuthService {
@@ -25,16 +24,29 @@ export class AuthService {
   ) {}
 
   async register(authCredentialDto: IUser & { password: string }) {
+    let result: AuthEventResponse;
     const { email, password, username } = authCredentialDto;
 
     const emailUser = await this.userRepo.findOne({ email });
     const usernameUser = await this.userRepo.findOne({ username });
 
     if (emailUser) {
-      throw new ConflictException('Email already exists');
+      return (result = {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'Email already exists',
+        error: {
+          message: 'Email already exists',
+        },
+      });
     }
     if (usernameUser) {
-      throw new ConflictException('Username already exists');
+      return (result = {
+        status: HttpStatus.BAD_REQUEST,
+        message: 'Username already exists',
+        error: {
+          message: 'Username already exists',
+        },
+      });
     }
 
     try {
@@ -43,35 +55,61 @@ export class AuthService {
         email,
         password,
       };
-      const result = await this.userRepo.create(user);
+      const newUser = await this.userRepo.create(user);
 
-      const cookie = this.getCookieWithJwtToken(result._id);
+      const cookie = this.getCookieWithJwtToken(newUser._id);
 
-      result.password = undefined;
-      return { result, cookie };
+      newUser.password = undefined;
+      return (result = {
+        data: newUser,
+        extraData: cookie,
+        status: HttpStatus.OK,
+      });
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new BadRequestException();
     }
   }
 
   async login(authCredentialDto: Omit<AuthCredentialDto, 'email'>) {
     try {
+      let result: AuthEventResponse;
+
       const { username, password } = authCredentialDto;
 
       const user = await this.userRepo.findOne({ username }).select('-__v');
+
       if (!user) {
-        throw new BadRequestException();
+        return (result = {
+          status: HttpStatus.BAD_REQUEST,
+          message: 'user not exist',
+          error: {
+            message: 'user not exist',
+          },
+        });
       }
+
       const passwordMatches = await bcrypt.compare(password, user.password);
+
       if (!passwordMatches) {
-        throw new BadRequestException();
+        return (result = {
+          status: HttpStatus.BAD_REQUEST,
+          message: 'user not exist',
+          error: {
+            message: 'user not exist',
+          },
+        });
       }
       const cookie = this.getCookieWithJwtToken(user.id);
 
       user.password = undefined;
-      return { user, cookie };
+
+      return (result = {
+        data: user,
+        extraData: cookie,
+        status: HttpStatus.OK,
+      });
     } catch (error) {
-      throw new InternalServerErrorException();
+      throw new BadRequestException();
     }
   }
 

@@ -1,9 +1,11 @@
-import { AuthEvent, IUser } from '@kanban2.0/shared';
+import { AuthEvent, AuthEventResponse, IUser } from '@kanban2.0/shared';
 import {
   BadRequestException,
   Body,
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Inject,
   Post,
   Res,
@@ -25,18 +27,23 @@ export class AuthController {
     @Res() res: Response,
     @Body() authCredentialDto: IUser & { password: string },
   ) {
-    try {
-      const registerData = await firstValueFrom(
-        this.authService.send({ cmd: AuthEvent.register }, authCredentialDto),
+    const registerData: AuthEventResponse = await firstValueFrom(
+      this.authService.send({ cmd: AuthEvent.register }, authCredentialDto),
+    );
+    if (registerData.status !== HttpStatus.OK) {
+      throw new HttpException(
+        {
+          message: registerData.message,
+          data: null,
+          errors: registerData.error,
+        },
+        registerData.status,
       );
-
-      const { result, cookie } = registerData;
-      res.setHeader('Set-Cookie', cookie);
-      result.password = undefined;
-      return res.send(result);
-    } catch (error) {
-      throw new BadRequestException();
     }
+    const { data, extraData } = registerData;
+    res.setHeader('Set-Cookie', extraData);
+    data.password = undefined;
+    return res.send(data);
   }
 
   @Post('/login')
@@ -44,18 +51,26 @@ export class AuthController {
     @Res() res: Response,
     @Body() authCredentialDto: Omit<IUser, 'email'>,
   ) {
-    try {
-      const loginData = await firstValueFrom(
-        this.authService.send({ cmd: AuthEvent.login }, authCredentialDto),
-      );
+    const loginData: AuthEventResponse = await firstValueFrom(
+      this.authService.send({ cmd: AuthEvent.login }, authCredentialDto),
+    );
 
-      const { user, cookie } = loginData;
-      res.setHeader('Set-Cookie', cookie);
-      user.password = undefined;
-      return res.send(user);
-    } catch (error) {
-      throw new BadRequestException();
+    const { data: user, extraData } = loginData;
+
+    if (loginData.status !== HttpStatus.OK) {
+      throw new HttpException(
+        {
+          message: loginData.message,
+          data: null,
+          errors: loginData.error,
+        },
+        loginData.status,
+      );
     }
+
+    res.setHeader('Set-Cookie', extraData);
+    user.password = undefined;
+    return res.send(user);
   }
 
   @Post('/logout')

@@ -55,7 +55,7 @@ export class AuthGuard implements CanActivate {
         userTokenInfo,
       ),
     );
-
+    userInfo.password = undefined;
     request.user = userInfo;
     return true;
   }
