@@ -1,12 +1,16 @@
 import { useAuthStore } from "@store/useAuth.store";
 import React from "react";
+import { useHistory } from "../../../../bootstrap";
 
 const NavSearch = () => {
   const { logout } = useAuthStore();
 
   return (
     <div tw="flex items-center justify-between w-full px-4 py-2 md:w-max ">
-      <h1 tw="mr-2 md:inline-block text-3xl uppercase text-indigo-500 tracking-widest">
+      <h1
+        onClick={() => useHistory.push("/landing")}
+        tw="mr-2 md:inline-block text-3xl uppercase text-indigo-500 tracking-widest cursor-pointer"
+      >
         JUNBI
       </h1>
       <div

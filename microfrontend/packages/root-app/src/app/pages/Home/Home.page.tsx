@@ -3,6 +3,7 @@ import Sidebar from "@components/Sidebar/Sidebar";
 import { useRemoteStore } from "@store/useRemoteStore";
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import Profile from "./components/Profile";
 
 const Home: React.FC = () => {
   const location = useLocation();
@@ -23,8 +24,8 @@ const Home: React.FC = () => {
           <Outlet />
         </div>
         {sidebarStatus ? (
-          <div tw="fixed top-0 right-0 hidden w-1/6 h-full px-4 pt-16 xl:block">
-            <h1 tw="text-white">Profile</h1>
+          <div tw="fixed top-0 right-0 hidden w-1/6 h-full px-4 pt-16 xl:block ">
+            <Profile />
           </div>
         ) : null}
       </div>
