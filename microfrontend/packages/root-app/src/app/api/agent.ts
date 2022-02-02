@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
-import { IAuth, IToken } from "../store/types/auth.types";
+import { ILogin, IRegister, IToken } from "../store/types/auth.types";
 
-axios.defaults.baseURL = "http://localhost:3030";
+axios.defaults.baseURL = "http://localhost:3030/api";
 
 axios.interceptors.request.use((config) => {
   // const token = store.commonStore.token;
@@ -14,9 +14,10 @@ axios.interceptors.response.use(undefined, (error: AxiosError) => {
   const { data, status, config, headers } = error.response!;
   switch (status) {
     case 400:
-      if (data.error) {
-        console.log(data, data.message[0]);
-        toast.error(data.message[0]);
+      if (data.error || data.errors) {
+        console.log(data);
+        if (data.message.includes("token")) return;
+        toast.error(data.message);
       }
       break;
     case 401:
@@ -26,6 +27,10 @@ axios.interceptors.response.use(undefined, (error: AxiosError) => {
       ) {
         toast.error("Session expired - please login again");
       }
+      break;
+    case 500:
+      toast.error(data.message);
+
       break;
   }
   return Promise.reject(error);
@@ -38,17 +43,30 @@ const requests = {
     axios
       .get<T>(url, {
         params,
+        withCredentials: true,
       })
       .then(responseBody),
-  post: <T>(url: string, body: {}) =>
-    axios.post<T>(url, body).then(responseBody),
-  put: <T>(url: string, body: {}) => axios.put<T>(url, body).then(responseBody),
-  del: <T>(url: string) => axios.delete<T>(url).then(responseBody),
+  post: <T>(url: string, body?: {}) =>
+    axios.post<T>(url, body, { withCredentials: true }).then(responseBody),
+  put: <T>(url: string, body: {}) =>
+    axios
+      .put<T>(url, body, {
+        withCredentials: true,
+      })
+      .then(responseBody),
+  del: <T>(url: string) =>
+    axios
+      .delete<T>(url, {
+        withCredentials: true,
+      })
+      .then(responseBody),
 };
 
 const Auth = {
-  login: (data: IAuth) => requests.post<IToken>(`/auth/signin`, data),
-  signup: (data: IAuth) => requests.post<IToken>(`/auth/signup`, data),
+  login: (data: ILogin) => requests.post<any>(`/auth/login`, data),
+  signup: (data: IRegister) => requests.post<any>(`/auth/register`, data),
+  getMe: () => requests.get<any>(`/auth/me`),
+  logout: () => requests.post<any>(`/auth/logout`),
 };
 
 const agent = {

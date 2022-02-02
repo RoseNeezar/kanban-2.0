@@ -1,9 +1,5 @@
 import initialData from "@pages/Home/components/initial-data";
-import { toast } from "react-toastify";
 import create from "zustand";
-import { useHistory } from "../../bootstrap";
-import agent from "../api/agent";
-import { IAuth } from "./types/auth.types";
 import { combineAndImmer } from "./types/combine-Immer";
 import { ISortKanban } from "./types/kanban.types";
 

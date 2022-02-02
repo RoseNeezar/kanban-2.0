@@ -1,8 +1,10 @@
 import AuthRoute from "@pages/Auth/AuthRoute";
 import Login from "@pages/Auth/Login.modal";
+import Register from "@pages/Auth/Register.modal";
 import Home from "@pages/Home/Home.page";
 import Landing from "@pages/Landing/Landing.page";
 import NotFound from "@pages/NotFound/NotFound";
+import { useAuthStore } from "@store/useAuth.store";
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
@@ -12,11 +14,12 @@ const App: React.FC = () => {
   const location = useLocation();
 
   const state = location.state as { backgroundLocation?: Location };
-
+  const { getMe } = useAuthStore();
   useEffect(() => {
     const el = document.querySelector(".overlay");
     // @ts-ignore
     el.style.display = "none";
+    getMe();
   }, []);
   return (
     <React.Suspense fallback={<h1>Loading...</h1>}>
@@ -41,6 +44,10 @@ const App: React.FC = () => {
           <Route
             path="/login"
             element={<Login isOpen={!!state?.backgroundLocation} />}
+          />
+          <Route
+            path="/register"
+            element={<Register isOpen={!!state?.backgroundLocation} />}
           />
         </Routes>
       )}
