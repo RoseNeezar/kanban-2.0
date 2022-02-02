@@ -4,10 +4,13 @@ import {
   CanActivate,
   ExecutionContext,
   HttpException,
+  BadRequestException,
 } from '@nestjs/common';
 import { firstValueFrom } from 'rxjs';
 import { Reflector } from '@nestjs/core';
 import { ClientProxy } from '@nestjs/microservices';
+import { AuthEvent } from '@kanban2.0/shared';
+import { Request } from 'express';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -21,35 +24,39 @@ export class AuthGuard implements CanActivate {
       'secured',
       context.getHandler(),
     );
-    console.log('canActivate---', secured);
+
     if (!secured) {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest();
-    console.log('auth-header', request);
-    // const userTokenInfo = await firstValueFrom(
-    //   this.tokenServiceClient.send('token_decode', {
-    //     token: request.headers.authorization,
-    //   }),
-    // );
+    const request = context.switchToHttp().getRequest<Request>();
 
-    // if (!userTokenInfo || !userTokenInfo.data) {
-    //   throw new HttpException(
-    //     {
-    //       message: userTokenInfo.message,
-    //       data: null,
-    //       errors: null,
-    //     },
-    //     userTokenInfo.status,
-    //   );
-    // }
+    if (!request.headers.cookie) {
+      throw new BadRequestException('no token');
+    }
 
-    // const userInfo = await firstValueFrom(
-    //   this.userServiceClient.send('user_get_by_id', userTokenInfo.data.userId),
-    // );
+    const token = request.headers.cookie.split('=')[1];
 
-    // request.user = userInfo.user;
+    if (!token || !request.headers.cookie) {
+      throw new BadRequestException('no token');
+    }
+
+    const userTokenInfo = await firstValueFrom(
+      this.authServiceClient.send({ cmd: AuthEvent.verifyToken }, token),
+    );
+
+    if (!userTokenInfo) {
+      throw new BadRequestException('token expired');
+    }
+
+    const userInfo = await firstValueFrom(
+      this.authServiceClient.send(
+        { cmd: AuthEvent.getUserByToken },
+        userTokenInfo,
+      ),
+    );
+
+    request.user = userInfo;
     return true;
   }
 }

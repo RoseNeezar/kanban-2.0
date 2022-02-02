@@ -15,6 +15,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { User } from 'src/models/user.model';
 import { AuthCredentialDto, TokenPayload } from './auth.dto';
 import * as jwt from 'jsonwebtoken';
+import { IUser } from '@kanban2.0/shared';
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(authCredentialDto: AuthCredentialDto) {
+  async register(authCredentialDto: IUser & { password: string }) {
     const { email, password, username } = authCredentialDto;
 
     const emailUser = await this.userRepo.findOne({ email });
@@ -35,6 +36,7 @@ export class AuthService {
     if (usernameUser) {
       throw new ConflictException('Username already exists');
     }
+
     try {
       const user: Partial<User> = {
         username,
@@ -43,36 +45,39 @@ export class AuthService {
       };
       const result = await this.userRepo.create(user);
 
-      return result;
+      const cookie = this.getCookieWithJwtToken(result._id);
+
+      result.password = undefined;
+      return { result, cookie };
     } catch (error) {
       throw new InternalServerErrorException();
     }
   }
 
-  async login(
-    authCredentialDto: Omit<AuthCredentialDto, 'email'>,
-    res: Response,
-  ) {
-    const { username, password } = authCredentialDto;
+  async login(authCredentialDto: Omit<AuthCredentialDto, 'email'>) {
+    try {
+      const { username, password } = authCredentialDto;
 
-    const user = await this.userRepo.findOne({ username });
-    if (!user) {
-      throw new BadRequestException();
-    }
-    const passwordMatches = await bcrypt.compare(password, user.password);
-    if (!passwordMatches) {
-      throw new BadRequestException();
-    }
-    const cookie = this.getCookieWithJwtToken(user.id);
+      const user = await this.userRepo.findOne({ username }).select('-__v');
+      if (!user) {
+        throw new BadRequestException();
+      }
+      const passwordMatches = await bcrypt.compare(password, user.password);
+      if (!passwordMatches) {
+        throw new BadRequestException();
+      }
+      const cookie = this.getCookieWithJwtToken(user.id);
 
-    res.setHeader('Set-Cookie', cookie);
-    user.password = undefined;
-    return res.send(user);
+      user.password = undefined;
+      return { user, cookie };
+    } catch (error) {
+      throw new InternalServerErrorException();
+    }
   }
 
-  async logout(res: Response) {
-    res.setHeader('Set-Cookie', this.getCookieForLogOut());
-    return res.status(200).json({ success: true });
+  async logout(data: string) {
+    const logoutCookie = this.getCookieForLogOut();
+    return { data, logoutCookie };
   }
 
   public getCookieForLogOut() {
@@ -105,19 +110,8 @@ export class AuthService {
     return userId;
   }
 
-  public async getUserById(userId: number) {
-    const user = await this.userRepo.findOne({ id: userId });
-    if (user) {
-      return user;
-    }
-    throw new HttpException(
-      'UserEntity with this id does not exist',
-      HttpStatus.NOT_FOUND,
-    );
-  }
-
-  public async customGetUserById(userId: number) {
-    const user = await this.userRepo.findOne({ id: userId });
+  public async getUserById(userId: any) {
+    const user = await this.userRepo.findOne({ _id: userId }).select('-__v');
     if (user) {
       return user;
     }

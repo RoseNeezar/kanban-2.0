@@ -25,6 +25,6 @@ export default class JwtAuthGuard implements CanActivate {
   }
 
   async hanldeValidate(userId: number) {
-    return await this.authService.customGetUserById(userId);
+    return await this.authService.getUserById(userId);
   }
 }

@@ -10,10 +10,7 @@ import * as bcrypt from 'bcryptjs';
   next();
 })
 @modelOptions({
-  schemaOptions: {
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
-  },
+  schemaOptions: {},
 })
 export class User {
   @prop({
