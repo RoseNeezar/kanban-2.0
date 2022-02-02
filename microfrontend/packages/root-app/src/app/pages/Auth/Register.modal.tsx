@@ -6,21 +6,24 @@ import { errorHelper } from "@utils/errorHelper";
 import React, { ChangeEvent, FC, Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
+const Register: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   const navigate = useNavigate();
   const [errors, setErrors] = useState<any>({});
-  const { login } = useAuthStore();
+  const { register } = useAuthStore();
+
   const {
     onChangeText,
     resetText,
-    fields: { username, password },
+    fields: { email, username, password },
   } = useFormInput({
+    email: "",
     username: "",
     password: "",
   });
 
   const handleSubmit = async () => {
-    await login({
+    await register({
+      email,
       username,
       password,
     });
@@ -52,20 +55,27 @@ const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
               <div tw="flex flex-col w-full p-5 pt-3 m-auto rounded-md ">
                 <div tw="flex flex-col py-4">
                   <Dialog.Title tw="font-bold text-3xl text-dark-txt text-center space-x-1">
-                    Login
+                    Register
                   </Dialog.Title>
                 </div>
                 <div tw="flex flex-col">
                   <InputGroup
+                    type="email"
+                    value={email}
+                    setValue={onChangeText}
+                    placeholder="Email"
+                    error={errorHelper(errors.message, "Email")}
+                  />
+                  <div tw="h-3" />
+
+                  <InputGroup
                     type="username"
                     value={username}
                     setValue={onChangeText}
-                    placeholder="Email"
+                    placeholder="Username"
                     error={errorHelper(errors.message, "Username")}
                   />
                   <div tw="h-3" />
-                  <div tw="bg-red-300" />
-
                   <InputGroup
                     type="password"
                     value={password}
@@ -73,6 +83,7 @@ const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
                     placeholder="Password"
                     error={errorHelper(errors.message, "Password")}
                   />
+                  <div tw="h-3" />
                   <button
                     tw=" w-full py-2 mt-2 mb-2 text-base rounded-xl font-bold text-white bg-indigo-800 border-indigo-800 focus:outline-none focus:border-indigo-800 hover:bg-indigo-400"
                     onClick={() => handleSubmit()}
@@ -89,4 +100,4 @@ const Login: FC<{ isOpen: boolean }> = ({ isOpen }) => {
   );
 };
 
-export default Login;
+export default Register;

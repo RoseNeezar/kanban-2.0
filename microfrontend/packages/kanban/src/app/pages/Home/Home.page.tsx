@@ -28,7 +28,7 @@ const Home = () => {
         title,
       })
     );
-    resetText("title");
+    resetText();
     console.log("tit-1", title);
   };
 
