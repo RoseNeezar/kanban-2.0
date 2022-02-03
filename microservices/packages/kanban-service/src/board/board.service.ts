@@ -36,7 +36,7 @@ export class BoardService {
   async getAllBoards(userId: string) {
     try {
       const boards = await this.boardModel
-        .find({ user: userId })
+        .find({ userId })
         .select('kanbanListOrder title _id');
       if (boards.length === 0) {
         const emptyBoard: Board = {
@@ -58,19 +58,18 @@ export class BoardService {
     const existingBoard = await this.boardModel.find({
       title,
     });
-    console.log('existingBoard');
-    console.log(existingBoard);
+
     if (existingBoard.length > 0) {
       throw new BadRequestException('Board already existed !');
     }
 
     try {
-      const result = await this.boardModel.create({
-        user: userId,
+      const boards = await this.boardModel.create({
+        userId,
         title,
         kanbanListOrder: [],
       });
-      return { result };
+      return { boards };
     } catch (error) {
       console.log(error);
       throw new BadRequestException(ErrorSanitizer(error));

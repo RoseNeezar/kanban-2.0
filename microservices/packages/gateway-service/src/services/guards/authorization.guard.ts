@@ -24,7 +24,6 @@ export class AuthGuard implements CanActivate {
       'secured',
       context.getHandler(),
     );
-
     if (!secured) {
       return true;
     }
@@ -35,9 +34,9 @@ export class AuthGuard implements CanActivate {
       throw new BadRequestException('no token');
     }
 
-    const token = request.headers.cookie.split('=')[1];
+    const token = request.cookies.token;
 
-    if (!token || !request.headers.cookie) {
+    if (!token) {
       throw new BadRequestException('no token');
     }
 
@@ -55,8 +54,14 @@ export class AuthGuard implements CanActivate {
         userTokenInfo,
       ),
     );
+
+    if (!userInfo) {
+      return false;
+    }
+
     userInfo.password = undefined;
     request.user = userInfo;
+
     return true;
   }
 }
