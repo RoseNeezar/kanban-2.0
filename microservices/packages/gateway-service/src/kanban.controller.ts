@@ -1,4 +1,9 @@
-import { ICreateBoard, IUpdateListOrder, KanbanEvent } from '@kanban2.0/shared';
+import {
+  ICreateBoard,
+  IUpdateListOrder,
+  IUser,
+  KanbanEvent,
+} from '@kanban2.0/shared';
 import {
   Body,
   Controller,
@@ -10,6 +15,7 @@ import {
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Authorization } from './decorators/authorization.decorator';
+import { GetUser } from './decorators/get-user.decorator';
 
 type IboardId = Pick<IUpdateListOrder, 'boardId'>['boardId'];
 
@@ -21,21 +27,27 @@ export class KanbanController {
 
   @Get('/all')
   @Authorization(true)
-  getAllBoards() {
-    return this.kanbanService.send({ cmd: KanbanEvent.getAllBoards }, 'user');
+  getAllBoards(@GetUser() user: IUser) {
+    return this.kanbanService.send({ cmd: KanbanEvent.getAllBoards }, user._id);
   }
 
   @Post('/')
-  async createBoard(@Body() boardDto: ICreateBoard) {
-    return this.kanbanService.send({ cmd: KanbanEvent.createBoard }, boardDto);
+  @Authorization(true)
+  async createBoard(@GetUser() user: IUser, @Body() boardDto: ICreateBoard) {
+    return this.kanbanService.send(
+      { cmd: KanbanEvent.createBoard },
+      { boardDto, userId: user._id },
+    );
   }
 
   @Get('/:boardId')
+  @Authorization(true)
   getBoard(@Param('boardId') boardId: IboardId) {
     return this.kanbanService.send({ cmd: KanbanEvent.getBoard }, boardId);
   }
 
   @Delete('/:boardId')
+  @Authorization(true)
   deleteBoard(@Param('boardId') boardId: IboardId) {
     return this.kanbanService.send({ cmd: KanbanEvent.deleteBoard }, boardId);
   }

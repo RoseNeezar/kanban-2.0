@@ -15,10 +15,10 @@ export class BoardController {
   }
 
   @MessagePattern({ cmd: KanbanEvent.createBoard })
-  createBoard(boardDto: ICreateBoard) {
+  createBoard(data: { boardDto: ICreateBoard; userId: string }) {
     return this.boardService.createBoard(
-      boardDto,
-      Types.ObjectId('4edd40c86762e0fb12000003'),
+      data.boardDto,
+      Types.ObjectId(data.userId),
     );
   }
 
