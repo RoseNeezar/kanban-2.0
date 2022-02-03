@@ -15,8 +15,11 @@ const kanbanSlice = createSlice({
     fetchBoards: (state) => {},
     createBoard: (state, action: PayloadAction<{ title: string }>) => {},
     addBoard: (state, action: PayloadAction<any>) => {
-      console.log("slice", action.payload.boards);
-      state.boards = action.payload.boards;
+      if (action.payload.boards.length > 0) {
+        state.boards = action.payload.boards;
+        return;
+      }
+      state.boards.push(action.payload.boards);
     },
   },
 });

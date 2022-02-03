@@ -35,9 +35,9 @@ const Home = () => {
   useEffect(() => {
     dispatch(fetchBoards());
   }, []);
-  console.log("Home", KanbanBoards);
+
   return (
-    <div tw="flex flex-col items-center justify-center w-full mt-10 overflow-hidden  ">
+    <div tw="bg-dark-main flex flex-col items-center justify-center w-full mt-10 overflow-hidden  ">
       <div tw="flex flex-col items-center ">
         <p tw="text-2xl text-dark-txt">Create Board</p>
         <div tw="flex flex-row items-center">
