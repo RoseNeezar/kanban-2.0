@@ -20,7 +20,7 @@ const Home: React.FC = () => {
           </div>
         ) : null}
 
-        <div tw="w-full px-2 pt-32  lg:w-2/3 xl:w-4/6 lg:pt-16">
+        <div tw="w-full  pt-32  lg:w-2/3 xl:w-4/6 lg:pt-16">
           <Outlet />
         </div>
         {sidebarStatus ? (
