@@ -73,7 +73,6 @@ const Home = () => {
               onClick={() => res._id}
             >
               {res.title}
-              <h1 tw="text-white bg-red-500">{res._id}</h1>
             </button>
           </div>
         ))}
