@@ -3,6 +3,7 @@ const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 const srcPath = path.join(__dirname, "src/app");
+
 module.exports = {
   stats: {
     errorDetails: true,
@@ -17,6 +18,7 @@ module.exports = {
     alias: {
       "@components": path.resolve(srcPath, "components"),
       "@shared-hooks": path.resolve(srcPath, "shared-hooks"),
+      "@junbi-shared": path.resolve(srcPath, "junbi-shared"),
       "@api": path.resolve(srcPath, "api"),
       "@pages": path.resolve(srcPath, "pages"),
       "@store": path.resolve(srcPath, "store"),
