@@ -1,0 +1,3 @@
+[submodule "microfrontend/packages/kanban/src/app/junbi-shared"]
+	path = microfrontend/packages/kanban/src/app/junbi-shared
+	url = https://github.com/RoseNeezar/junbi-shared.git
