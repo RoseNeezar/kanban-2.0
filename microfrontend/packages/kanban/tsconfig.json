@@ -24,6 +24,7 @@
     "paths": {
       "@component/*": ["src/app/component/*"],
       "@shared-hooks/*": ["src/app/shared-hooks/*"],
+      "@junbi-shared/*": ["src/app/junbi-shared/*"],
       "@api/*": ["src/app/api/*"],
       "@pages/*": ["src/app/pages/*"],
       "@store/*": ["src/app/store/*"],

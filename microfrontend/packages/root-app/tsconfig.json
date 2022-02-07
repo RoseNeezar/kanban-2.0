@@ -24,6 +24,7 @@
     "paths": {
       "@components/*": ["src/app/components/*"],
       "@shared-hooks/*": ["src/app/shared-hooks/*"],
+      "@junbi-shared/*": ["src/app/junbi-shared/*"],
       "@api/*": ["src/app/api/*"],
       "@pages/*": ["src/app/pages/*"],
       "@store/*": ["src/app/store/*"],
@@ -32,5 +33,5 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "types"],
-  "exclude": ["node_modules", "webpack.*"]
+  "exclude": ["node_modules", "webpack.*", "src/app/junbi-shared/*"]
 }

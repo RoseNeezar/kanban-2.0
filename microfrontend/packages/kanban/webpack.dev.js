@@ -9,7 +9,7 @@ const devConfig = {
   entry: "./src/index.ts",
   mode: "development",
   devServer: {
-    port: 3001,
+    port: 3002,
     historyApiFallback: true,
     headers: {
       "Access-Control-Allow-Origin": "*",
@@ -18,7 +18,7 @@ const devConfig = {
   //to dev in host app for hot reload
   // this shit works but only has live reload
   // output: {
-  //   publicPath: "http://localhost:3001/",
+  //   publicPath: "http://localhost:3002/",
   //   clean: true,
   // },
   resolve: {

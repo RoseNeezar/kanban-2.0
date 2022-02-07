@@ -31,6 +31,7 @@ const devConfig = {
       name: "root-app",
       remotes: {
         kanban: "kanban@[kanbanUrl]/remoteEntry.js",
+        game: "game@[gameUrl]/remoteEntry.js",
       },
       shared: {
         ...deps,
