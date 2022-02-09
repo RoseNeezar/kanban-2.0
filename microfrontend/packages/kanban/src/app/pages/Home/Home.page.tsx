@@ -23,20 +23,18 @@ const Home = () => {
   });
 
   const HandleCreateBoard = async () => {
-    console.log("tit-0", title);
     dispatch(
       createBoard({
         title,
       })
     );
     resetText();
-    console.log("tit-1", title);
   };
 
   useEffect(() => {
     dispatch(fetchBoards());
   }, []);
-  console.log("decove-", Devices);
+
   return (
     <div tw="bg-dark-main flex flex-col items-center justify-center w-full mt-10 overflow-hidden  ">
       <div tw="w-full xl:w-3/5 py-6 overflow-y-hidden">
