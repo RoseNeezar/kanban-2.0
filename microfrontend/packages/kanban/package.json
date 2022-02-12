@@ -23,6 +23,7 @@
     "axios": "^0.24.0",
     "compression": "^1.7.4",
     "dayjs": "^1.10.6",
+    "dts-loader": "^0.1.6",
     "express": "^4.17.2",
     "history": "^5.0.0",
     "immer": "^9.0.7",
@@ -37,6 +38,7 @@
     "redux-observable": "^2.0.0",
     "rxjs": "^7.3.0",
     "socket.io-client": "^4.4.1",
+    "webpack-remote-types-plugin": "^0.2.7",
     "zustand": "^3.6.7"
   },
   "devDependencies": {
