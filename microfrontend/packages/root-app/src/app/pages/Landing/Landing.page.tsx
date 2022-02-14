@@ -1,4 +1,3 @@
-import { Button } from "@junbi-shared/src";
 import { useAuthStore } from "@store/useAuth.store";
 import { Link, useLocation } from "react-router-dom";
 // import BaseButton from "../../junbi-shared/components/BaseButton";
@@ -9,7 +8,6 @@ const Landing = () => {
   const location = useLocation();
   return (
     <div tw=" bg-right bg-cover bg-dark-main h-screen ">
-      <Button label="Great" />
       <div tw="w-full container mx-auto p-6">
         <div tw="w-full flex items-center justify-between">
           <a
