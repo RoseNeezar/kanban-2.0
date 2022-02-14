@@ -20,6 +20,7 @@ import { GetUser } from './decorators/get-user.decorator';
 export class AuthController {
   constructor(
     @Inject('AUTH_SERVICE') private readonly authService: ClientProxy,
+    @Inject('CALENDAR_SERVICE') private readonly calendarService: ClientProxy,
   ) {}
 
   @Post('/register')
@@ -95,5 +96,14 @@ export class AuthController {
   @Authorization(true)
   me(@GetUser() user: IUser) {
     return user;
+  }
+
+  @Get('/')
+  async go() {
+    console.log('hello go');
+    return this.calendarService.send('send-user-data', {
+      Name: 'hi nestjs',
+      Email: 'me@g.com',
+    });
   }
 }

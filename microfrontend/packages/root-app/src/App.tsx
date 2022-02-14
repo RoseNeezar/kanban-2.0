@@ -9,7 +9,7 @@ import React, { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 const Kanban = React.lazy(() => import("./app/remote/Kanban.remote"));
-const Game = React.lazy(() => import("./app/remote/Game.remote"));
+// const Game = React.lazy(() => import("./app/remote/Game.remote"));
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -35,8 +35,8 @@ const App: React.FC = () => {
           }
         >
           <Route path="kanban/*" element={<Kanban />} />
-          <Route path="game/*" element={<Game />} />
-          <Route path="/app" element={<Navigate replace to="game" />} />
+          {/* <Route path="game/*" element={<Game />} /> */}
+          <Route path="/app" element={<Navigate replace to="kanban" />} />
         </Route>
         <Route path="/" element={<Navigate replace to="/app/kanban" />} />
         <Route path="*" element={<NotFound />} />
