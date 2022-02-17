@@ -5,7 +5,12 @@ import { combineEpics, Epic } from "redux-observable";
 import { catchError, filter, map, of, switchMap } from "rxjs";
 import agent from "../../../api/agent";
 import { errorCatcher } from "../error/error.slice";
-import { addBoard, createBoard, fetchBoards } from "./kanban.slice";
+import {
+  addBoard,
+  createBoard,
+  deleteBoard,
+  fetchBoards,
+} from "./kanban.slice";
 
 export type MyEpic = Epic<AnyAction, AnyAction, RootState>;
 
@@ -35,4 +40,14 @@ const fetchBoardEpic: MyEpic = (action$, state$) =>
     )
   );
 
-export default combineEpics(createBoardEpic, fetchBoardEpic);
+const deleteBoardEpic: MyEpic = (action$, state$) =>
+  action$.pipe(
+    filter(deleteBoard.match),
+    switchMap((action) =>
+      agent.boardService
+        .deleteBoard(action.payload.boardId)
+        .pipe(map((res) => fetchBoards()))
+    )
+  );
+
+export default combineEpics(createBoardEpic, fetchBoardEpic, deleteBoardEpic);
