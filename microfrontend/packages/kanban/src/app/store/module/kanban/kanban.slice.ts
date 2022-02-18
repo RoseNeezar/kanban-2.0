@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface kanbanState {
   boards: any[];
+  socketConnected: boolean;
 }
 
 const initialState: kanbanState = {
   boards: [],
+  socketConnected: false,
 };
 
 const kanbanSlice = createSlice({
@@ -22,10 +24,19 @@ const kanbanSlice = createSlice({
       }
       state.boards.push(action.payload.boards);
     },
+    setSocketLoaded: (state) => {
+      console.log("setSocketLoaded");
+      state.socketConnected = true;
+    },
   },
 });
 
-export const { fetchBoards, createBoard, addBoard, deleteBoard } =
-  kanbanSlice.actions;
+export const {
+  fetchBoards,
+  createBoard,
+  addBoard,
+  deleteBoard,
+  setSocketLoaded,
+} = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;
