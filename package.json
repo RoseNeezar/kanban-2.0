@@ -9,7 +9,6 @@
     "stop": "docker-compose -f docker-compose.dev.yml down && docker-compose -f docker-compose.dev.yml rm -f"
   },
   "devDependencies": {
-    "concurrently": "^6.5.1",
     "husky": "^7.0.0"
   }
 }
