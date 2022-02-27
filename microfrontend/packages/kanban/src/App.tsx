@@ -24,7 +24,7 @@ const App: React.FC<{
       <Routes location={state?.backgroundLocation || location}>
         <Route path={`${routePrefix}/kanban`} element={<Home />} />
 
-        <Route path={`${routePrefix}/kanban/board`} element={<Kanban />} />
+        <Route path={`${routePrefix}/kanban/:boardId`} element={<Kanban />} />
         <Route
           path="/"
           element={<Navigate replace to={`${routePrefix}/kanban/`} />}

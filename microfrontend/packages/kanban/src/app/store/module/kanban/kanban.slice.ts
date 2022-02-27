@@ -3,11 +3,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 export interface kanbanState {
   boards: any[];
   socketConnected: boolean;
+  currentBoard: any;
 }
 
 const initialState: kanbanState = {
   boards: [],
   socketConnected: false,
+  currentBoard: null,
 };
 
 const kanbanSlice = createSlice({
@@ -15,6 +17,11 @@ const kanbanSlice = createSlice({
   initialState,
   reducers: {
     fetchBoards: (state) => {},
+    getBoard: (state, action: PayloadAction<{ id: string }>) => {},
+    getBoardSuccess: (state, action: PayloadAction<any>) => {
+      console.log(action.payload);
+      state.currentBoard = action.payload;
+    },
     createBoard: (state, action: PayloadAction<{ title: string }>) => {},
     deleteBoard: (state, action: PayloadAction<{ boardId: string }>) => {},
     addBoard: (state, action: PayloadAction<any>) => {
@@ -32,6 +39,8 @@ const kanbanSlice = createSlice({
 });
 
 export const {
+  getBoard,
+  getBoardSuccess,
   fetchBoards,
   createBoard,
   addBoard,
