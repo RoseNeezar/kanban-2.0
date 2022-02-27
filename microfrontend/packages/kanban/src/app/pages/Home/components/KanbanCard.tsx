@@ -1,6 +1,7 @@
 import { useAppDispatch } from "@store/hooks/hooks";
 import { deleteBoard } from "@store/module/kanban/kanban.slice";
 import React, { FC } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface IKanbanCard {
   _id: string;
@@ -8,6 +9,7 @@ interface IKanbanCard {
 }
 
 const KanbanCard: FC<IKanbanCard> = (res) => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const HandleDelete = (boardId: string) => {
     dispatch(
@@ -16,6 +18,7 @@ const KanbanCard: FC<IKanbanCard> = (res) => {
       })
     );
   };
+
   return (
     <div tw="p-3 rounded-md bg-dark-third" key={res._id}>
       <div tw="flex justify-end ">
@@ -29,7 +32,7 @@ const KanbanCard: FC<IKanbanCard> = (res) => {
 
       <button
         tw="w-full h-20 rounded-md hover:text-black hover:bg-gray-200 bg-dark-second text-dark-txt"
-        onClick={() => res._id}
+        onClick={() => navigate(res._id)}
       >
         {res.title}
       </button>

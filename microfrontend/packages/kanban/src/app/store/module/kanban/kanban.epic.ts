@@ -2,7 +2,7 @@ import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "@store/store";
 
 import { combineEpics, Epic } from "redux-observable";
-import { catchError, filter, map, of, switchMap } from "rxjs";
+import { catchError, EMPTY, filter, map, of, switchMap, tap } from "rxjs";
 import agent from "../../../api/agent";
 import { errorCatcher } from "../error/error.slice";
 import {
@@ -10,6 +10,8 @@ import {
   createBoard,
   deleteBoard,
   fetchBoards,
+  getBoard,
+  getBoardSuccess,
 } from "./kanban.slice";
 
 export type MyEpic = Epic<AnyAction, AnyAction, RootState>;
@@ -40,6 +42,17 @@ const fetchBoardEpic: MyEpic = (action$, state$) =>
     )
   );
 
+const getBoardEpic: MyEpic = (action$, state$) =>
+  action$.pipe(
+    filter(getBoard.match),
+    switchMap((action) =>
+      agent.boardService.getBoard(action.payload.id).pipe(
+        map(({ response }) => getBoardSuccess(response)),
+        catchError((err) => of(errorCatcher(err.response)))
+      )
+    )
+  );
+
 const deleteBoardEpic: MyEpic = (action$, state$) =>
   action$.pipe(
     filter(deleteBoard.match),
@@ -50,4 +63,9 @@ const deleteBoardEpic: MyEpic = (action$, state$) =>
     )
   );
 
-export default combineEpics(createBoardEpic, fetchBoardEpic, deleteBoardEpic);
+export default combineEpics(
+  createBoardEpic,
+  fetchBoardEpic,
+  deleteBoardEpic,
+  getBoardEpic
+);

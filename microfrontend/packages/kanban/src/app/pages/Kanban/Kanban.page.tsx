@@ -1,12 +1,19 @@
 import { useKanbanStore } from "@store/useKanbanStore";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { DragDropContext, DragUpdate, Droppable } from "react-beautiful-dnd";
 import styled from "@emotion/styled";
 import KanbanList from "./components/KanbanList";
+import { useParams } from "react-router-dom";
+import { first } from "rxjs";
+import { useAppDispatch } from "@store/hooks/hooks";
+import { getBoard } from "@store/module/kanban/kanban.slice";
 const Container = styled.div`
   display: flex;
 `;
 const Kanban: FC = () => {
+  const { boardId } = useParams<{ boardId: string }>();
+  const dispatch = useAppDispatch();
+
   const { sortKanban, kanbanListsOrder, kanbanLists, kanbanTask } =
     useKanbanStore();
 
@@ -32,6 +39,16 @@ const Kanban: FC = () => {
       dropIdEnd: destination.droppableId,
     });
   };
+  const HandleGetBoard = () => {
+    dispatch(
+      getBoard({
+        id: boardId as string,
+      })
+    );
+  };
+  useEffect(() => {
+    HandleGetBoard();
+  }, []);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>

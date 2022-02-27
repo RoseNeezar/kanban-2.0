@@ -57,7 +57,7 @@ const Home = () => {
 
       <div tw="grid justify-center w-full grid-flow-row gap-10 overflow-scroll auto-rows-min grid-rows-min grid-cols-fit">
         {KanbanBoards.filter((fil: any) => fil.title !== "").map((res: any) => (
-          <KanbanCard {...res} />
+          <KanbanCard key={res._id} {...res} />
         ))}
       </div>
     </div>

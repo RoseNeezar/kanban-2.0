@@ -1,3 +1,4 @@
+import LoadingPage from "@components/loading/LoadingPage";
 import AuthRoute from "@pages/Auth/AuthRoute";
 import Login from "@pages/Auth/Login.modal";
 import Register from "@pages/Auth/Register.modal";
@@ -23,7 +24,7 @@ const App: React.FC = () => {
     getMe();
   }, []);
   return (
-    <React.Suspense fallback={<h1>Loading...</h1>}>
+    <React.Suspense fallback={<LoadingPage />}>
       <Routes location={state?.backgroundLocation || location}>
         <Route path="/landing" element={<Landing />} />
         <Route
