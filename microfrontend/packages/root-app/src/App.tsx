@@ -10,7 +10,6 @@ import React, { useEffect } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 const Kanban = React.lazy(() => import("./app/remote/Kanban.remote"));
-// const Game = React.lazy(() => import("./app/remote/Game.remote"));
 
 const App: React.FC = () => {
   const location = useLocation();
