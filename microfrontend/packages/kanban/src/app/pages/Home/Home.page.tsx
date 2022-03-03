@@ -2,6 +2,7 @@ import useFormInput from "@shared-hooks/useFormInput";
 import { useAppDispatch, useAppSelector } from "@store/hooks/hooks";
 import { createBoard, fetchBoards } from "@store/module/kanban/kanban.slice";
 import { RootState } from "@store/store";
+import useSocket from "@store/websockets/websockets";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import KanbanCard from "./components/KanbanCard";
@@ -14,6 +15,7 @@ const Home = () => {
   const dispatch = useAppDispatch();
   const [errors, setErrors] = useState<any>({});
 
+  useSocket("who");
   const {
     onChangeText,
     resetText,

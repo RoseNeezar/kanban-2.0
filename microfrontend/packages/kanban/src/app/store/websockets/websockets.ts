@@ -12,9 +12,10 @@ const useSocket = (user: string) => {
 
     // dispatch(setSocket(socket));
 
-    socket.emit("setup", user);
+    socket.emit("setup", "heheheehhe");
 
     socket.on("connected", () => {
+      console.log("decode");
       dispatch(setSocketLoaded());
     });
   }, []);

@@ -4,7 +4,7 @@ import { TypegooseModule } from 'nestjs-typegoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BoardModule } from './board/board.module';
-import { KanbanGateway } from './gateway/kanban.gateway';
+import { KanbanModule } from './gateway/kanban.module';
 import { ListModule } from './list/list.module';
 import { taskModule } from './task/task.module';
 
@@ -20,8 +20,9 @@ import { taskModule } from './task/task.module';
     ListModule,
     taskModule,
     BoardModule,
+    KanbanModule,
   ],
   controllers: [AppController],
-  providers: [AppService, KanbanGateway],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -1,13 +1,20 @@
 import Navbar from "@components/Navbar/Navbar";
 import Sidebar from "@components/Sidebar/Sidebar";
 import { useRemoteStore } from "@store/useRemoteStore";
+import useSocket, { getSocket } from "@store/websockets/websockets";
 import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Profile from "./components/Profile";
 
 const Home: React.FC = () => {
   const location = useLocation();
-  // useSocket();
+  // try {
+  //   const sock = getSocket();
+  //   console.log("sock-", sock);
+  // } catch (error) {
+  //   console.log("errrrr", error);
+  // }
+
   const { sidebarStatus } = useRemoteStore();
 
   return (
