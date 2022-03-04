@@ -7,6 +7,7 @@ const useSocket = (user: string) => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     const socket = io("http://localhost:3030", {
+      withCredentials: true,
       path: "/kanban/socket.io",
     });
 
