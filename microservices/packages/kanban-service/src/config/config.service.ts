@@ -1,3 +1,5 @@
+import { Transport } from '@nestjs/microservices';
+
 export class ConfigService {
   private readonly envConfig: { [key: string]: any } = null;
 
@@ -5,6 +7,12 @@ export class ConfigService {
     this.envConfig = {
       url: process.env.TASK_MICROSERVICE_URL,
       host: 'task_redis',
+    };
+    this.envConfig.authService = {
+      options: {
+        url: process.env.AUTH_MICROSERVICE_URL,
+      },
+      transport: Transport.REDIS,
     };
   }
 

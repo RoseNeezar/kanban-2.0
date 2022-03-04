@@ -1,14 +1,59 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Observable } from 'rxjs';
+import { AuthEvent } from '@kanban2.0/shared';
+import {
+  BadRequestException,
+  CanActivate,
+  ExecutionContext,
+  Inject,
+  Injectable,
+} from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import { firstValueFrom } from 'rxjs';
+import { Socket } from 'socket.io';
 
 @Injectable()
 export class WsAuthGuard implements CanActivate {
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    const client = context.switchToWs().getClient();
-    // return !!client?.handshake?.session['userId'];
-    // console.log('client---', client);
+  constructor(
+    @Inject('AUTH_SERVICE') private readonly authServiceClient: ClientProxy,
+  ) {}
+
+  public async canActivate(context: ExecutionContext): Promise<boolean> {
+    const request: Socket = context.switchToWs().getClient();
+
+    if (!request.handshake.headers.cookie) {
+      return false;
+    }
+    const tempToken = request.handshake.headers.cookie
+      .split(' ')
+      .find((s: string) => s.includes('token'));
+
+    const token = tempToken.substring(
+      tempToken.indexOf('=') + 1,
+      tempToken.lastIndexOf(';'),
+    );
+
+    if (!token) {
+      return false;
+    }
+
+    const userTokenInfo = await firstValueFrom(
+      this.authServiceClient.send({ cmd: AuthEvent.verifyToken }, token),
+    );
+
+    if (!userTokenInfo) {
+      throw new BadRequestException('token expired');
+    }
+
+    const userInfo = await firstValueFrom(
+      this.authServiceClient.send(
+        { cmd: AuthEvent.getUserByToken },
+        userTokenInfo,
+      ),
+    );
+
+    if (!userInfo) {
+      return false;
+    }
+
     return true;
   }
 }

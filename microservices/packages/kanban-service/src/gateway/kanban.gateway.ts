@@ -14,7 +14,8 @@ import { KanbanService } from './kanban.service';
 @WebSocketGateway({
   path: '/kanban/socket.io',
   cors: {
-    origin: '*',
+    credentials: true,
+    origin: 'http://localhost:3000',
   },
   transports: ['polling', 'websocket'],
 })
@@ -35,8 +36,6 @@ export class KanbanGateway
   @UseGuards(WsAuthGuard)
   @SubscribeMessage('setup')
   handleMessage(client: Socket, payload: any) {
-    console.log('some connect !!!!', payload);
-    console.log('some ', payload);
     client.emit('connected', 'from me here');
   }
 
