@@ -20,7 +20,7 @@ export class WsAuthGuard implements CanActivate {
     const request: Socket = context.switchToWs().getClient();
 
     if (!request.handshake.headers.cookie) {
-      return false;
+      throw new BadRequestException('no token');
     }
     const tempToken = request.handshake.headers.cookie
       .split(' ')
@@ -32,7 +32,7 @@ export class WsAuthGuard implements CanActivate {
     );
 
     if (!token) {
-      return false;
+      throw new BadRequestException('no token');
     }
 
     const userTokenInfo = await firstValueFrom(
@@ -41,17 +41,6 @@ export class WsAuthGuard implements CanActivate {
 
     if (!userTokenInfo) {
       throw new BadRequestException('token expired');
-    }
-
-    const userInfo = await firstValueFrom(
-      this.authServiceClient.send(
-        { cmd: AuthEvent.getUserByToken },
-        userTokenInfo,
-      ),
-    );
-
-    if (!userInfo) {
-      return false;
     }
 
     return true;
