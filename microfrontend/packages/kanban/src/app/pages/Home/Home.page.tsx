@@ -1,19 +1,12 @@
 import useFormInput from "@shared-hooks/useFormInput";
-import { useAppDispatch, useAppSelector } from "@store/hooks/hooks";
-import { createBoard, fetchBoards } from "@store/module/kanban/kanban.slice";
-import { RootState } from "@store/store";
 import useSocket from "@store/websockets/websockets";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import KanbanCard from "./components/KanbanCard";
+import { useCreateBoard, useGetAllBoard } from "./hooks/useBoard";
 
 const Home = () => {
-  const navigate = useNavigate();
-  const KanbanBoards = useAppSelector(
-    (state: RootState) => state.kanban.boards
-  );
-  const dispatch = useAppDispatch();
-  const [errors, setErrors] = useState<any>({});
+  const { boardList: KanbanBoards, isLoading } = useGetAllBoard();
+  const { createBoard } = useCreateBoard();
 
   useSocket("who");
   const {
@@ -25,20 +18,13 @@ const Home = () => {
   });
 
   const HandleCreateBoard = async () => {
-    dispatch(
-      createBoard({
-        title,
-      })
-    );
+    await createBoard(title);
+
     resetText();
   };
 
-  useEffect(() => {
-    dispatch(fetchBoards());
-  }, []);
-
   return (
-    <div tw="bg-dark-main flex flex-col items-center justify-center w-full mt-10 overflow-hidden  ">
+    <div tw="bg-dark-main flex flex-col items-center  w-full overflow-hidden ">
       <div tw="flex flex-col items-center ">
         <p tw="text-2xl text-dark-txt">Create Board</p>
         <div tw="flex flex-row items-center">
@@ -58,9 +44,10 @@ const Home = () => {
       </div>
 
       <div tw="grid justify-center w-full grid-flow-row gap-10 overflow-scroll auto-rows-min grid-rows-min grid-cols-fit">
-        {KanbanBoards.filter((fil: any) => fil.title !== "").map((res: any) => (
-          <KanbanCard key={res._id} {...res} />
-        ))}
+        {!isLoading &&
+          KanbanBoards.filter((fil: any) => fil.title !== "").map(
+            (res: any) => <KanbanCard key={res._id} {...res} />
+          )}
       </div>
     </div>
   );
