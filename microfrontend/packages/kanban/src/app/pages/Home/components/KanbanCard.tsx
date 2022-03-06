@@ -1,7 +1,12 @@
+import queryApi from "@api/queryApi";
+import { boardsKey } from "@api/queryKey";
 import { useAppDispatch } from "@store/hooks/hooks";
 import { deleteBoard } from "@store/module/kanban/kanban.slice";
+import produce from "immer";
 import React, { FC } from "react";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { useDeleteBoard } from "../hooks/useBoard";
 
 interface IKanbanCard {
   _id: string;
@@ -10,13 +15,11 @@ interface IKanbanCard {
 
 const KanbanCard: FC<IKanbanCard> = (res) => {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const HandleDelete = (boardId: string) => {
-    dispatch(
-      deleteBoard({
-        boardId,
-      })
-    );
+
+  const { deleteBoard, isLoading } = useDeleteBoard();
+
+  const HandleDelete = async (boardId: string) => {
+    await deleteBoard(boardId);
   };
 
   return (
@@ -29,7 +32,7 @@ const KanbanCard: FC<IKanbanCard> = (res) => {
           <i className=" bx bxs-x-circle"></i>
         </button>
       </div>
-
+      {isLoading && <h1>Loading....</h1>}
       <button
         tw="w-full h-20 rounded-md hover:text-black hover:bg-gray-200 bg-dark-second text-dark-txt"
         onClick={() => navigate(res._id)}

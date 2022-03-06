@@ -8,8 +8,19 @@ import GlobalStyles from "./styles/GlobalStyles";
 import "react-toastify/dist/ReactToastify.min.css";
 import { store } from "@store/store";
 import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 export const useHistory = createBrowserHistory();
+
+const client = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: Infinity,
+      cacheTime: 0,
+    },
+  },
+});
 
 const useMount = (
   el: ReactDOM.Container,
@@ -18,13 +29,15 @@ const useMount = (
 ) => {
   ReactDOM.render(
     <React.StrictMode>
-      <Provider store={store}>
-        <GlobalStyles />
-        <ToastContainer position="top-right" hideProgressBar />
-        <CustomRouter history={useHistory}>
-          <App routePrefix={routePrefix} useRemoteStore={useRemoteStore} />
-        </CustomRouter>
-      </Provider>
+      <QueryClientProvider client={client}>
+        <Provider store={store}>
+          <GlobalStyles />
+          <ToastContainer position="top-right" hideProgressBar />
+          <CustomRouter history={useHistory}>
+            <App routePrefix={routePrefix} useRemoteStore={useRemoteStore} />
+          </CustomRouter>
+        </Provider>
+      </QueryClientProvider>
     </React.StrictMode>,
     el
   );
