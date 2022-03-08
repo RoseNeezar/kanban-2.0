@@ -1,5 +1,5 @@
 import queryApi from "@api/queryApi";
-import { boardsKey } from "@api/queryKey";
+import { boardsKey, currentBoardKey } from "@api/queryKey";
 import produce from "immer";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 

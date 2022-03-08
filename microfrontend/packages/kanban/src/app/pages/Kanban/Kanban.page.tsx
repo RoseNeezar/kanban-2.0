@@ -1,16 +1,16 @@
 import styled from "@emotion/styled";
-import { useGetCurrentBoard } from "@pages/Home/hooks/useBoard";
 import { useKanbanStore } from "@store/useKanbanStore";
 import React, { FC } from "react";
 import { DragDropContext, DragUpdate, Droppable } from "react-beautiful-dnd";
 import { useParams } from "react-router-dom";
 import KanbanList from "./components/KanbanList";
+import { useGetBoardList } from "./hooks/useList";
 const Container = styled.div`
   display: flex;
 `;
 const Kanban: FC = () => {
   const { boardId } = useParams<{ boardId: string }>();
-  const { currentBoard, isLoading } = useGetCurrentBoard(boardId as string);
+  const { currentBoard, isLoading } = useGetBoardList(boardId as string);
 
   const { sortKanban, kanbanListsOrder, kanbanLists, kanbanTask } =
     useKanbanStore();

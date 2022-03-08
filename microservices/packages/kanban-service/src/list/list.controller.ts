@@ -1,3 +1,4 @@
+import { KanbanEvent } from '@kanban2.0/shared';
 import {
   Body,
   Controller,
@@ -7,12 +8,13 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 
 import { Types } from 'mongoose';
 import { ICreateList, IUpdateListTitle } from './list.dto';
 import { ListService } from './list.service';
 
-@Controller('api/lists')
+@Controller()
 export class ListController {
   constructor(private listService: ListService) {}
 
@@ -29,13 +31,13 @@ export class ListController {
     return this.listService.updateListTitle(listTitle, listId);
   }
 
-  @Get('/list/:listId')
-  getList(@Param('listId') listId: Types.ObjectId) {
-    return this.listService.getList({ listId });
+  @MessagePattern({ cmd: KanbanEvent.getListDetails })
+  getListDetails(listId: Types.ObjectId) {
+    return this.listService.getListDetails({ listId });
   }
 
-  @Get('/all/:boardId')
-  getKanbanBoardLists(@Param('boardId') boardId: Types.ObjectId) {
+  @MessagePattern({ cmd: KanbanEvent.getKanbanBoardLists })
+  getKanbanBoardLists(boardId: Types.ObjectId) {
     return this.listService.getKanbanBoardLists({ boardId });
   }
 
