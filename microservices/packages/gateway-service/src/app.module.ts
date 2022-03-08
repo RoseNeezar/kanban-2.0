@@ -7,11 +7,17 @@ import { AppService } from './app.service';
 import { AuthController } from './auth.controller';
 import { ConfigService } from './config/config.service';
 import { KanbanController } from './kanban.controller';
+import { ListController } from './list.controller';
 import { AuthGuard } from './services/guards/authorization.guard';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
-  controllers: [AppController, KanbanController, AuthController],
+  controllers: [
+    AppController,
+    KanbanController,
+    AuthController,
+    ListController,
+  ],
   providers: [
     AppService,
     ConfigService,

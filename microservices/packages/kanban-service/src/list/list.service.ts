@@ -74,7 +74,7 @@ export class ListService {
     }
   }
 
-  async getList(listDto: IGetList) {
+  async getListDetails(listDto: IGetList) {
     const { listId } = listDto;
     try {
       const result = await this.listModel.findById(listId);

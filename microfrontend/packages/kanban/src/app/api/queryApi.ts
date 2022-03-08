@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
-axios.defaults.baseURL = "http://localhost:3030/api/kanban";
+axios.defaults.baseURL = "http://localhost:3030/api";
 
 axios.interceptors.request.use((config) => {
   // const token = store.commonStore.token;
@@ -63,16 +63,23 @@ const requests = {
 
 const boardService = {
   createBoard: (data: { boardTitle: string }) =>
-    requests.post<any>(`/`, {
+    requests.post<any>(`/kanban`, {
       title: data.boardTitle,
     }),
-  getAllBoards: () => requests.get<any>(`/all`),
-  getBoard: (boardId: string) => requests.get<any>(`/${boardId}`),
-  deleteBoard: (boardId: string) => requests.del<any>(`/${boardId}`),
+  getAllBoards: () => requests.get<any>(`/kanban/all`),
+  getBoard: (boardId: string) => requests.get<any>(`/kanban/${boardId}`),
+  deleteBoard: (boardId: string) => requests.del<any>(`/kanban/${boardId}`),
+};
+
+const listService = {
+  getBoardList: (boardId: string) => requests.get<any>(`/lists/all/${boardId}`),
+  getListDetails: (listId: string) =>
+    requests.get<any>(`/lists/list/${listId}`),
 };
 
 const queryApi = {
   boardService,
+  listService,
 };
 
 export default queryApi;
