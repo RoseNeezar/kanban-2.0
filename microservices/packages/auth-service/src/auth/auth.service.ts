@@ -140,7 +140,7 @@ export class AuthService {
     });
   }
 
-  public async verifyToken(token: any) {
+  public verifyToken(token: any) {
     const { userId }: any = jwt.verify(token, process.env.JWT_SECRET);
     if (!userId) {
       return false;

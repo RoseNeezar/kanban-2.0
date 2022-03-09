@@ -1,3 +1,4 @@
+import { ICreateList } from '@kanban2.0/shared';
 import { Logger, UseGuards } from '@nestjs/common';
 import {
   OnGatewayConnection,
@@ -9,6 +10,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { WsAuthGuard } from 'src/guards/ws/ws.auth.guard';
+import { ListService } from 'src/list/list.service';
 import { KanbanService } from './kanban.service';
 
 @WebSocketGateway({
@@ -25,7 +27,10 @@ export class KanbanGateway
   @WebSocketServer()
   server!: Server;
 
-  constructor(private kanbanService: KanbanService) {}
+  constructor(
+    private kanbanService: KanbanService,
+    private listService: ListService,
+  ) {}
 
   private logger: Logger = new Logger('MessageGateway');
 
@@ -35,15 +40,28 @@ export class KanbanGateway
 
   @UseGuards(WsAuthGuard)
   @SubscribeMessage('setup')
-  handleMessage(client: Socket, payload: any) {
-    client.emit('connected', 'from me here');
+  handleMessage(client: Socket, boardId: string) {
+    client.join(boardId);
+    client.emit('connected');
   }
 
   @UseGuards(WsAuthGuard)
-  @SubscribeMessage('joinBoard')
-  handleInBoard(client: Socket, room: string): void {
-    client.join(room);
+  @SubscribeMessage('create-list')
+  async handleInBoard(client: Socket, data: ICreateList): Promise<void> {
+    console.log('data---', data);
+    await this.listService.createList(data, client);
   }
+
+  // @UseGuards(WsAuthGuard)
+  // @SubscribeMessage('getAllList')
+  // getAllBoardList(client: Socket, boardId: string): void {
+  //   this.listService.getKanbanBoardLists(
+  //     {
+  //       boardId,
+  //     },
+  //     client,
+  //   );
+  // }
 
   async handleDisconnect(client: Socket) {
     this.logger.log(`Client disconnected: `);

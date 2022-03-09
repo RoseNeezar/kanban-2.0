@@ -4,6 +4,7 @@ import { ClientProxyFactory } from '@nestjs/microservices';
 import { TypegooseModule } from 'nestjs-typegoose';
 import { ConfigService } from 'src/config/config.service';
 import { WsAuthGuard } from 'src/guards/ws/ws.auth.guard';
+import { ListService } from 'src/list/list.service';
 import { Board } from 'src/models/board.model';
 import { List } from 'src/models/list.model';
 import { Task } from 'src/models/task.model';
@@ -14,6 +15,7 @@ import { KanbanService } from './kanban.service';
   imports: [TypegooseModule.forFeature([List, Board, Task])],
   providers: [
     KanbanService,
+    ListService,
     KanbanGateway,
     ConfigService,
     {
