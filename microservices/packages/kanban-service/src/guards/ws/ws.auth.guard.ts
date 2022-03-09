@@ -28,7 +28,7 @@ export class WsAuthGuard implements CanActivate {
 
     const token = tempToken.substring(
       tempToken.indexOf('=') + 1,
-      tempToken.lastIndexOf(';'),
+      tempToken.length,
     );
 
     if (!token) {

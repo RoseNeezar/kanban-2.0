@@ -18,10 +18,10 @@ import { ListService } from './list.service';
 export class ListController {
   constructor(private listService: ListService) {}
 
-  @Post('/')
-  createList(@Body() listDto: ICreateList) {
-    return this.listService.createList(listDto);
-  }
+  // @Post('/')
+  // createList(@Body() listDto: ICreateList) {
+  //   return this.listService.createList(listDto);
+  // }
 
   @Post('/:listId')
   updateListTitle(

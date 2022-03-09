@@ -12,6 +12,7 @@ import {
   IGetList,
   IUpdateListTitle,
 } from './list.dto';
+import { Socket } from 'socket.io';
 
 @Injectable()
 export class ListService {
@@ -34,7 +35,7 @@ export class ListService {
       return [null, error];
     }
   }
-  async createList(listDto: ICreateList) {
+  async createList(listDto: ICreateList, socket: Socket) {
     const { boardId, title } = listDto;
     try {
       const List: List = {
@@ -53,7 +54,8 @@ export class ListService {
       const newListOrder = Array.from(board.kanbanListOrder);
       newListOrder.push(newList._id);
       await board.set({ kanbanListOrder: newListOrder }).save();
-      return { list: newList };
+      console.log('here---', listDto.boardId);
+      return socket.in(`${listDto.boardId}`).emit('create-list', newList);
     } catch (error) {
       throw new BadRequestException(ErrorSanitizer(error));
     }
