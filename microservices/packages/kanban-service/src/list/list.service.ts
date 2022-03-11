@@ -12,10 +12,12 @@ import {
   IGetList,
   IUpdateListTitle,
 } from './list.dto';
-import { Socket } from 'socket.io';
+import { Socket, Server } from 'socket.io';
+import { KanbanService } from 'src/gateway/kanban.service';
 
 @Injectable()
 export class ListService {
+  public socket: Server = null;
   constructor(
     @InjectModel(List)
     private readonly listModel: ReturnModelType<typeof List>,
@@ -23,6 +25,7 @@ export class ListService {
     private readonly boardModel: ReturnModelType<typeof Board>,
     @InjectModel(Task)
     private readonly taskModel: ReturnModelType<typeof Task>,
+    private kanbanService: KanbanService,
   ) {}
 
   async getBoard(
@@ -35,7 +38,7 @@ export class ListService {
       return [null, error];
     }
   }
-  async createList(listDto: ICreateList, socket: Socket) {
+  async createList(listDto: ICreateList, some: Socket) {
     const { boardId, title } = listDto;
     try {
       const List: List = {
@@ -54,8 +57,8 @@ export class ListService {
       const newListOrder = Array.from(board.kanbanListOrder);
       newListOrder.push(newList._id);
       await board.set({ kanbanListOrder: newListOrder }).save();
-      console.log('here---', listDto.boardId);
-      return socket.in(`${listDto.boardId}`).emit('create-list', newList);
+
+      this.socket.in(`${listDto.boardId}`).emit('create-list', newList);
     } catch (error) {
       throw new BadRequestException(ErrorSanitizer(error));
     }

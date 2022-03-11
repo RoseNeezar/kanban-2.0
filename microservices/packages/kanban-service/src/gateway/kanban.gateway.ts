@@ -36,12 +36,14 @@ export class KanbanGateway
 
   afterInit(server: Server) {
     this.kanbanService.socket = server;
+    this.listService.socket = server;
   }
 
   @UseGuards(WsAuthGuard)
   @SubscribeMessage('setup')
   handleMessage(client: Socket, boardId: string) {
     client.join(boardId);
+    console.log('bords', boardId);
     client.emit('connected');
   }
 

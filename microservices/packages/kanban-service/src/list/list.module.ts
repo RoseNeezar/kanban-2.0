@@ -6,10 +6,11 @@ import { Task } from 'src/models/task.model';
 import { List } from 'src/models/list.model';
 import { ListController } from './list.controller';
 import { ListService } from './list.service';
+import { KanbanService } from 'src/gateway/kanban.service';
 
 @Module({
   imports: [TypegooseModule.forFeature([List, Board, Task])],
   controllers: [ListController],
-  providers: [ListService],
+  providers: [ListService, KanbanService],
 })
 export class ListModule {}
