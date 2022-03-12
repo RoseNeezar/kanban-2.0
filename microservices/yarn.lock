@@ -580,16 +580,12 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@kanban2.0/shared@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@kanban2.0/shared/-/shared-1.1.2.tgz#e3f33ae9936d6ea9f09c1897cae5a75a94b12dec"
-  integrity sha512-IupjHVPIbXYaXnd96xokUByB/d+tekAPjlnmKHJRYtZkDs0Vyi8ro+BwxobEgSyi+i/76YpMI/Fcwvl3TrPQyQ==
+"@kanban2.0/shared@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@kanban2.0/shared/-/shared-1.1.4.tgz#0be6ba98e6944e522878bc710f90ca5ead232c12"
+  integrity sha512-drzKSQBd6OWhXlZv65cUCTmKHKPH+f6Nj8rh+EMtZFP/j0mUT34afky4GOqLnfuO6iw58k8Jvbb7eUAXeZQZCA==
   dependencies:
-    "@nestjs/config" "^1.1.6"
-    "@nestjs/microservices" "^8.2.5"
     "@types/mongoose" "5.7.36"
-    redis "3.0.2"
-    rxjs "^7.5.2"
 
 "@lerna/add@4.0.0":
   version "4.0.0"
@@ -7247,7 +7243,7 @@ redent@^3.0.0:
     indent-string "^4.0.0"
     strip-indent "^3.0.0"
 
-redis-commands@^1.5.0, redis-commands@^1.7.0:
+redis-commands@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/redis-commands/-/redis-commands-1.7.0.tgz#15a6fea2d58281e27b1cd1acfb4b293e278c3a89"
   integrity sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==
@@ -7263,16 +7259,6 @@ redis-parser@^3.0.0:
   integrity sha1-tm2CjNyv5rS4pCin3vTGvKwxyLQ=
   dependencies:
     redis-errors "^1.0.0"
-
-redis@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/redis/-/redis-3.0.2.tgz#bd47067b8a4a3e6a2e556e57f71cc82c7360150a"
-  integrity sha512-PNhLCrjU6vKVuMOyFu7oSP296mwBkcE6lrAjruBYG5LgdSqtRBoVQIylrMyVZD/lkF24RSNNatzvYag6HRBHjQ==
-  dependencies:
-    denque "^1.4.1"
-    redis-commands "^1.5.0"
-    redis-errors "^1.2.0"
-    redis-parser "^3.0.0"
 
 redis@^3.0.2:
   version "3.1.2"
@@ -7430,7 +7416,7 @@ rxjs@6.6.7, rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.2.0, rxjs@^7.5.2:
+rxjs@^7.2.0:
   version "7.5.2"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.2.tgz#11e4a3a1dfad85dbf7fb6e33cbba17668497490b"
   integrity sha512-PwDt186XaL3QN5qXj/H9DGyHhP3/RYYgZZwqBv9Tv8rsAaiwFH1IsJJlcgD37J7UW5a6O67qX0KWKS3/pu0m4w==
