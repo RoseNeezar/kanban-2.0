@@ -1,4 +1,4 @@
-import { KanbanEvent } from '@kanban2.0/shared';
+import { IUpdateListOrder, KanbanEvent } from '@kanban2.0/shared';
 import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { Types } from 'mongoose';
@@ -30,5 +30,10 @@ export class BoardController {
   @MessagePattern({ cmd: KanbanEvent.deleteBoard })
   deleteBoard(boardId: Types.ObjectId) {
     return this.boardService.deleteBoard({ boardId });
+  }
+
+  @MessagePattern({ cmd: KanbanEvent.updateListOrder })
+  updateListOrder(boardDto: IUpdateListOrder) {
+    return this.boardService.updateListOrder(boardDto);
   }
 }

@@ -11,6 +11,7 @@ import {
   Get,
   Inject,
   Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
@@ -50,5 +51,13 @@ export class KanbanController {
   @Authorization(true)
   deleteBoard(@Param('boardId') boardId: IboardId) {
     return this.kanbanService.send({ cmd: KanbanEvent.deleteBoard }, boardId);
+  }
+
+  @Patch('/')
+  updateListOrder(@Body() boardDto: IUpdateListOrder) {
+    return this.kanbanService.send(
+      { cmd: KanbanEvent.updateListOrder },
+      boardDto,
+    );
   }
 }
