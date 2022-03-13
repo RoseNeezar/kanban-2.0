@@ -14,7 +14,7 @@ const Kanban: FC = () => {
   const { boardId } = useParams<{ boardId: string }>();
   useSocket(boardId as string);
   const { currentBoard, isLoading } = useGetBoardList(boardId as string);
-
+  console.log("currentboard-", currentBoard);
   const { sortKanban, kanbanListsOrder, kanbanLists, kanbanTask } =
     useKanbanStore();
 
