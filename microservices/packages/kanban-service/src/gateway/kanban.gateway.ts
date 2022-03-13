@@ -51,7 +51,6 @@ export class KanbanGateway
   @SubscribeMessage('create-list')
   async handleInBoard(client: Socket, data: ICreateList): Promise<void> {
     console.log('data---', data);
-    await this.listService.createList(data, client);
   }
 
   // @UseGuards(WsAuthGuard)

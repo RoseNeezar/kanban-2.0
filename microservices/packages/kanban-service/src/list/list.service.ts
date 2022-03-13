@@ -38,7 +38,7 @@ export class ListService {
       return [null, error];
     }
   }
-  async createList(listDto: ICreateList, some: Socket) {
+  async createList(listDto: ICreateList) {
     const { boardId, title } = listDto;
     try {
       const List: List = {
@@ -57,8 +57,7 @@ export class ListService {
       const newListOrder = Array.from(board.kanbanListOrder);
       newListOrder.push(newList._id);
       await board.set({ kanbanListOrder: newListOrder }).save();
-
-      this.socket.in(`${listDto.boardId}`).emit('create-list', newList);
+      return { list: newList };
     } catch (error) {
       throw new BadRequestException(ErrorSanitizer(error));
     }

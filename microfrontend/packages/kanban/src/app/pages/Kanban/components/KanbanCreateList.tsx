@@ -1,12 +1,15 @@
 import { useSocketStore } from "@store/useSocket.store";
 import React from "react";
+import { useCreateList } from "../hooks/useList";
 
 const KanbanCreateList: React.FC<{ boardId: string }> = ({ boardId }) => {
   const [title, setTitle] = React.useState("");
+  const { createList } = useCreateList();
   const { socket } = useSocketStore();
-  const handleCreateList = (e: React.KeyboardEvent<HTMLInputElement>) => {
+
+  const handleCreateList = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && title.length > 0) {
-      socket?.emit("create-list", {
+      await createList({
         title,
         boardId,
       });

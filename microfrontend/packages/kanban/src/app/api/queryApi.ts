@@ -1,3 +1,4 @@
+import { ICreateList, IUpdateList, IAllCards } from "@store/types/kanban.types";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
@@ -75,6 +76,17 @@ const listService = {
   getBoardList: (boardId: string) => requests.get<any>(`/lists/all/${boardId}`),
   getListDetails: (listId: string) =>
     requests.get<any>(`/lists/list/${listId}`),
+  createList: (title: string, boardId: string): Promise<ICreateList> =>
+    requests.post("/lists", {
+      title: title,
+      boardId: boardId,
+    }),
+  updateList: (title: string, listId: string): Promise<IUpdateList> =>
+    requests.post(`/lists/${listId}`, { title: title }),
+  deleteList: (listId: string): Promise<void> =>
+    requests.del(`/lists/list/${listId}`),
+  getAllTaskFromList: (listIds: string[]): Promise<IAllCards> =>
+    requests.post("/cards/getallcards", { listIds: listIds }),
 };
 
 const queryApi = {

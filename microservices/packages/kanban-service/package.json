@@ -39,7 +39,7 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
-    "@kanban2.0/shared": "^1.1.4",
+    "@kanban2.0/shared": "^1.1.5",
     "@nestjs/cli": "^8.0.0",
     "@nestjs/schematics": "^8.0.0",
     "@nestjs/testing": "^8.0.0",

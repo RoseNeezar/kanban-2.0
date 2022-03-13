@@ -1,9 +1,6 @@
 import queryApi from "@api/queryApi";
 import { currentBoardKey } from "@api/queryKey";
-import { useSocketStore } from "@store/useSocket.store";
-import useSocket from "@store/websockets/websockets";
-import { useQuery } from "react-query";
-import { useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 
 export const useGetBoardList = (boardId: string) => {
   const { data, isLoading } = useQuery(currentBoardKey, () =>
@@ -13,5 +10,22 @@ export const useGetBoardList = (boardId: string) => {
   return {
     currentBoard: data,
     isLoading,
+  };
+};
+
+export const useCreateList = () => {
+  const cache = useQueryClient();
+
+  const { mutateAsync } = useMutation(
+    (data: { title: string; boardId: string }) =>
+      queryApi.listService.createList(data.title, data.boardId),
+    {
+      onSuccess: (result) => {
+        cache.invalidateQueries(currentBoardKey);
+      },
+    }
+  );
+  return {
+    createList: mutateAsync,
   };
 };
