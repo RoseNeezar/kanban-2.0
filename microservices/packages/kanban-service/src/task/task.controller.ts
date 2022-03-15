@@ -1,20 +1,13 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
-
+import { KanbanEvent } from '@kanban2.0/shared';
+import { Body, Controller, Post } from '@nestjs/common';
+import { MessagePattern } from '@nestjs/microservices';
 import { Types } from 'mongoose';
 import {
   ICreatetask,
   IGetAlltask,
-  IUpdatetaskDifferentList,
-  IUpdatetaskameList,
   IUpdatetask,
+  IUpdatetaskameList,
+  IUpdatetaskDifferentList,
 } from './task.dto';
 import { taskService } from './task.service';
 
@@ -22,26 +15,23 @@ import { taskService } from './task.service';
 export class taskController {
   constructor(private taskervice: taskService) {}
 
-  @Post('/')
-  createtask(@Body() taskDto: ICreatetask) {
+  @MessagePattern({ cmd: KanbanEvent.createTask })
+  createtask(taskDto: ICreatetask) {
     return this.taskervice.createtask(taskDto);
   }
 
-  @Post('/getalltask')
-  getAlltask(@Body() taskDto: IGetAlltask) {
+  @MessagePattern({ cmd: KanbanEvent.getAllTask })
+  getAlltask(taskDto: IGetAlltask) {
     return this.taskervice.getAlltask(taskDto);
   }
 
-  @Post('/task/:taskId')
-  updatetask(
-    @Param('taskId') taskId: Types.ObjectId,
-    @Body() taskDto: IUpdatetask,
-  ) {
-    return this.taskervice.updatetask(taskDto, taskId);
+  @MessagePattern({ cmd: KanbanEvent.updateTask })
+  updatetask(data: { taskId: Types.ObjectId; taskDto: IUpdatetask }) {
+    return this.taskervice.updatetask(data.taskDto, data.taskId);
   }
 
-  @Get('/task/:taskId')
-  gettask(@Param('taskId') taskId: Types.ObjectId) {
+  @MessagePattern({ cmd: KanbanEvent.getTaskDetails })
+  gettask(taskId: Types.ObjectId) {
     return this.taskervice.gettask(taskId);
   }
 
@@ -55,8 +45,8 @@ export class taskController {
     return this.taskervice.updatetaskDifferentList(taskDto);
   }
 
-  @Delete('/task/:taskId')
-  deletetask(@Param('taskId') taskId: string) {
+  @MessagePattern({ cmd: KanbanEvent.deleteTask })
+  deletetask(taskId: string) {
     return this.taskervice.deletetask(taskId);
   }
 }

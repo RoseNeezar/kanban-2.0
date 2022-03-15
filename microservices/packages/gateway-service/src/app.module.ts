@@ -9,6 +9,7 @@ import { ConfigService } from './config/config.service';
 import { KanbanController } from './kanban.controller';
 import { ListController } from './list.controller';
 import { AuthGuard } from './services/guards/authorization.guard';
+import { TaskController } from './task.controller';
 
 @Module({
   imports: [ConfigModule.forRoot({ isGlobal: true })],
@@ -17,6 +18,7 @@ import { AuthGuard } from './services/guards/authorization.guard';
     KanbanController,
     AuthController,
     ListController,
+    TaskController,
   ],
   providers: [
     AppService,
