@@ -580,10 +580,10 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@kanban2.0/shared@^1.1.5":
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/@kanban2.0/shared/-/shared-1.1.5.tgz#3f169d05ab428cf8a4dc8b5df68873997b769bd8"
-  integrity sha512-xCURL+Su/FlLRZadxAH7PYIbahKRNia5+FoNUjRMvP6+QP2TJAGLSIBQ7OR+8E5EJrqNHLn1VIf3cT7AjSWvzQ==
+"@kanban2.0/shared@^1.1.6":
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/@kanban2.0/shared/-/shared-1.1.6.tgz#9c3f367dca9b319f036bc1c6a0d7766e81934f8c"
+  integrity sha512-W7BTlm8PrTHY/ffRCeV/ump/2gIcCWDz/XFdcaZHE2vAXOLdwki9F15duqx904QDgU1cniybvRUVwlAne4s6Rw==
   dependencies:
     "@types/mongoose" "5.7.36"
 

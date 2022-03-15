@@ -64,12 +64,12 @@ export class BoardService {
     }
 
     try {
-      const boards = await this.boardModel.create({
+      const board = await this.boardModel.create({
         userId,
         title,
         kanbanListOrder: [],
       });
-      return { boards };
+      return { board };
     } catch (error) {
       console.log(error);
       throw new BadRequestException(ErrorSanitizer(error));
