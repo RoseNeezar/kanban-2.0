@@ -42,7 +42,7 @@ services:
     depends_on:
       # - postgres
       - mongo
-      - redis
+      - auth_redis
     build:
       dockerfile: Dockerfile.dev
       context: ./microservices
@@ -55,7 +55,7 @@ services:
     depends_on:
       # - postgres
       - mongo
-      - redis
+      - auth_redis
     build:
       dockerfile: Dockerfile.socket.dev
       context: ./microservices
