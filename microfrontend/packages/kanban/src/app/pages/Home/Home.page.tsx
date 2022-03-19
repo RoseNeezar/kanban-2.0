@@ -18,9 +18,11 @@ const Home = () => {
   });
 
   const HandleCreateBoard = async () => {
-    await createBoard(title);
+    if (title.length > 0) {
+      await createBoard(title);
 
-    resetText();
+      resetText();
+    }
   };
 
   return (
@@ -45,7 +47,7 @@ const Home = () => {
 
       <div tw="grid justify-center w-full grid-flow-row gap-10 overflow-scroll auto-rows-min grid-rows-min grid-cols-fit">
         {!isLoading &&
-          KanbanBoards.filter((fil: any) => fil.title !== "").map(
+          KanbanBoards?.filter((fil: any) => fil.title !== "").map(
             (res: any) => <KanbanCard key={res._id} {...res} />
           )}
       </div>

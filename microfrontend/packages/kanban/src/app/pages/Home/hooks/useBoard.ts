@@ -42,7 +42,7 @@ export const useCreateBoard = () => {
       onSuccess: (result) => {
         cache.setQueryData(boardsKey, (data: any) => {
           return produce(data, (newData: any[]) => {
-            newData.push(result.boards);
+            newData.push(result.board);
           });
         });
       },
