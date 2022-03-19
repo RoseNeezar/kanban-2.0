@@ -1,4 +1,4 @@
-import initialData from "@pages/Home/components/initial-data";
+import { initialData } from "@pages/Home/components/initial-data";
 import create from "zustand";
 import { combineAndImmer } from "./types/combine-Immer";
 import { ISortKanban } from "./types/kanban.types";
@@ -33,38 +33,38 @@ export const useKanbanStore = create(
           return;
         }
 
-        //@ts-ignore
-        const listStart = get().kanbanLists[dropIdStart];
-        //@ts-ignore
-        const listEnd = get().kanbanLists[dropIdEnd];
+        const listStart = get().kanbanLists.find((x) => x.id === dropIdStart);
+
+        const listEnd = get().kanbanLists.find((x) => x.id === dropIdEnd);
         //move task in same list
         if (dropIdStart === dropIdEnd) {
-          const newTaskIds = Array.from(listStart.taskIds);
+          const newTaskIds = Array.from(listStart!.taskIds);
           newTaskIds.splice(dragIndexStart, 1);
           newTaskIds.splice(dragIndexEnd, 0, dragableID);
 
           set((s) => {
-            //@ts-ignore
-            s.kanbanLists[dropIdStart].taskIds = newTaskIds;
+            s.kanbanLists.find((x) => x.id === dropIdStart)!.taskIds =
+              newTaskIds;
           });
 
           return;
         }
 
         // move task from one list to another
-        const homeTaskIds = Array.from(listStart.taskIds);
+        const homeTaskIds = Array.from(listStart!.taskIds);
 
         homeTaskIds.splice(dragIndexStart, 1);
 
-        const foreignTaskIds = Array.from(listEnd.taskIds);
+        const foreignTaskIds = Array.from(listEnd!.taskIds);
 
         foreignTaskIds.splice(dragIndexEnd, 0, dragableID);
 
         set((s) => {
-          //@ts-ignore
-          s.kanbanLists[dropIdStart].taskIds = homeTaskIds;
-          //@ts-ignore
-          s.kanbanLists[dropIdEnd].taskIds = foreignTaskIds;
+          s.kanbanLists.find((x) => x.id === dropIdStart)!.taskIds =
+            homeTaskIds;
+
+          s.kanbanLists.find((x) => x.id === dropIdEnd)!.taskIds =
+            foreignTaskIds;
         });
       },
     })

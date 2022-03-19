@@ -3,12 +3,6 @@ export interface IKanbanTask {
   title: string;
 }
 
-export interface IKanbanList {
-  title: string;
-  id: string;
-  tasks?: IKanbanTask[];
-}
-
 export interface ISortKanban {
   dropIdStart: string;
   dropIdEnd: string;
@@ -18,20 +12,20 @@ export interface ISortKanban {
   type: "task" | "list";
 }
 
-export interface IKanbanCard {
-  id: string;
+export interface IKanbanTask {
+  _id: string;
   text: string;
 }
 
 export interface IKanbanList {
   title: string;
-  id: string;
-  cards?: IKanbanCard[];
+  _id: string;
+  tasks?: IKanbanTask[];
 }
 
-export interface IEditCard {
+export interface IEditTask {
   listID: string;
-  cardID: string;
+  taskID: string;
 }
 
 export interface IGetAllBoards {
@@ -47,16 +41,14 @@ export interface IBoard {
 }
 
 export interface ICreateBoard {
-  message: string;
-  result: IBoard;
+  board: IBoard;
 }
 
 export interface IList {
-  cardIds: string[];
+  taskIds: string[];
   _id: string;
   board?: string;
   title: string;
-  __v?: 0;
 }
 
 export interface ICreateList {
@@ -74,7 +66,7 @@ export interface IGetAllListFromBoard {
   };
 }
 
-export interface ICard {
+export interface ITask {
   _id: string;
   title: string;
   dueDate?: Date;
@@ -82,16 +74,16 @@ export interface ICard {
   list: string;
   boardId?: string;
 }
-export type ICalendarCard = Record<number, ICard[]>;
+export type ICalendarTask = Record<number, ITask[]>;
 
-export interface IAllCards {
+export interface IAllTasks {
   message: string;
-  cards: ICard[];
+  task: ITask[];
 }
 
-export interface ICreateCard {
+export interface ICreateTask {
   message: string;
-  card: {
+  task: {
     _id: string;
     title: string;
     list: string;
@@ -100,14 +92,14 @@ export interface ICreateCard {
   list: IList;
 }
 
-export interface IUpdateCard {
+export interface IUpdateTask {
   status: string;
   data: {
     _id: string;
     title: string;
     descriptions: string;
     list: string;
-    cardId: string;
+    taskId: string;
   };
 }
 
@@ -131,12 +123,12 @@ export interface IUpdateListOrder {
   updatedListOrder: [];
 }
 
-export interface IUpdateCardSameList {
+export interface IUpdateTaskSameList {
   message: string;
   savedList: IList;
 }
 
-export interface IUpdateCardDifferentList {
+export interface IUpdateTaskDifferentList {
   message: string;
   removeLists: IList;
   addedLists: IList;

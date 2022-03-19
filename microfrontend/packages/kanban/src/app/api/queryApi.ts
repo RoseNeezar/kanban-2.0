@@ -1,4 +1,11 @@
-import { ICreateList, IUpdateList, IAllCards } from "@store/types/kanban.types";
+import {
+  ICreateList,
+  IUpdateList,
+  ICreateBoard,
+  IGetAllBoards,
+  IGetAllListFromBoard,
+  IAllTasks,
+} from "@store/types/kanban.types";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
 
@@ -64,18 +71,16 @@ const requests = {
 
 const boardService = {
   createBoard: (data: { boardTitle: string }) =>
-    requests.post<any>(`/kanban`, {
+    requests.post<ICreateBoard>(`/kanban`, {
       title: data.boardTitle,
     }),
-  getAllBoards: () => requests.get<any>(`/kanban/all`),
-  getBoard: (boardId: string) => requests.get<any>(`/kanban/${boardId}`),
+  getAllBoards: () => requests.get<IGetAllBoards>(`/kanban/all`),
   deleteBoard: (boardId: string) => requests.del<any>(`/kanban/${boardId}`),
 };
 
 const listService = {
-  getBoardList: (boardId: string) => requests.get<any>(`/lists/all/${boardId}`),
-  getListDetails: (listId: string) =>
-    requests.get<any>(`/lists/list/${listId}`),
+  getBoardList: (boardId: string) =>
+    requests.get<IGetAllListFromBoard>(`/lists/all/${boardId}`),
   createList: (title: string, boardId: string): Promise<ICreateList> =>
     requests.post("/lists", {
       title: title,
@@ -85,8 +90,8 @@ const listService = {
     requests.post(`/lists/${listId}`, { title: title }),
   deleteList: (listId: string): Promise<void> =>
     requests.del(`/lists/list/${listId}`),
-  getAllTaskFromList: (listIds: string[]): Promise<IAllCards> =>
-    requests.post("/cards/getallcards", { listIds: listIds }),
+  getAllTaskFromList: (listIds: string[]): Promise<IAllTasks> =>
+    requests.post("/task/getalltask", { listIds: listIds }),
 };
 
 const queryApi = {

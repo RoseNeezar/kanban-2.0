@@ -21,6 +21,7 @@ const KanbanCreateList: React.FC<IKanbanCreateList> = ({ boardId, action }) => {
         boardId,
       });
       setTitle("");
+      setOpenForm(false);
     }
   };
   return (
