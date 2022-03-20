@@ -4,11 +4,9 @@ import styled from "@emotion/styled";
 import { Draggable } from "react-beautiful-dnd";
 
 const Container = styled.div<{ isDragging: boolean }>`
-  border: 1px solid lightgrey;
-  border-radius: 2px;
-  padding: 8px;
-  margin-bottom: 8px;
-  background-color: ${(props) => (props.isDragging ? "lightgreen" : "white")};
+  background-color: ${(props) =>
+    props.isDragging ? `rgba(99, 102, 241, 1)` : "white"};
+  color: ${(props) => (props.isDragging ? `white` : "black")};
 `;
 
 interface IKanbanTaskComp {
@@ -21,6 +19,7 @@ const KanbanTask: FC<IKanbanTaskComp> = ({ index, task }) => {
     <Draggable draggableId={task._id} index={index}>
       {(provided, snapshot) => (
         <Container
+          tw="font-semibold rounded-md p-2 mb-2"
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
