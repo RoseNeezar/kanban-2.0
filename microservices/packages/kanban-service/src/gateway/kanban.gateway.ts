@@ -9,6 +9,8 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { IUpdateListOrder } from 'src/board/board.dto';
+import { BoardService } from 'src/board/board.service';
 import { WsAuthGuard } from 'src/guards/ws/ws.auth.guard';
 import { ListService } from 'src/list/list.service';
 import { KanbanService } from './kanban.service';
@@ -30,6 +32,7 @@ export class KanbanGateway
   constructor(
     private kanbanService: KanbanService,
     private listService: ListService,
+    private boardService: BoardService,
   ) {}
 
   private logger: Logger = new Logger('MessageGateway');
@@ -37,6 +40,7 @@ export class KanbanGateway
   afterInit(server: Server) {
     this.kanbanService.socket = server;
     this.listService.socket = server;
+    this.boardService.socket = server;
   }
 
   @UseGuards(WsAuthGuard)
@@ -48,9 +52,9 @@ export class KanbanGateway
   }
 
   @UseGuards(WsAuthGuard)
-  @SubscribeMessage('create-list')
-  async handleInBoard(client: Socket, data: ICreateList): Promise<void> {
-    console.log('data---', data);
+  @SubscribeMessage('update-list-order')
+  handleInBoard(client: Socket, data: any) {
+    return this.boardService.updateListOrder(data);
   }
 
   // @UseGuards(WsAuthGuard)

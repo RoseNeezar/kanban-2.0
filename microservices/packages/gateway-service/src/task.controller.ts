@@ -19,7 +19,7 @@ import { Authorization } from './decorators/authorization.decorator';
 
 type IboardId = Pick<IUpdateListOrder, 'boardId'>['boardId'];
 
-@Controller('api/task')
+@Controller('api/tasks')
 export class TaskController {
   constructor(
     @Inject('KANBAN_SERVICE') private readonly kanbanService: ClientProxy,
