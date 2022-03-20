@@ -9,6 +9,7 @@ import { ListService } from 'src/list/list.service';
 import { Board } from 'src/models/board.model';
 import { List } from 'src/models/list.model';
 import { Task } from 'src/models/task.model';
+import { TaskService } from 'src/task/task.service';
 import { KanbanGateway } from './kanban.gateway';
 import { KanbanService } from './kanban.service';
 
@@ -18,6 +19,7 @@ import { KanbanService } from './kanban.service';
     KanbanService,
     ListService,
     BoardService,
+    TaskService,
     KanbanGateway,
     ConfigService,
     {

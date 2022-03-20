@@ -12,7 +12,7 @@ import {
   IGetList,
   IUpdateListTitle,
 } from './list.dto';
-import { Socket, Server } from 'socket.io';
+import { Server } from 'socket.io';
 import { KanbanService } from 'src/gateway/kanban.service';
 
 @Injectable()

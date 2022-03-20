@@ -1,4 +1,8 @@
-import { ICreateList } from '@kanban2.0/shared';
+import {
+  ICreateList,
+  IUpdatetaskameList,
+  IUpdatetaskDifferentList,
+} from '@kanban2.0/shared';
 import { Logger, UseGuards } from '@nestjs/common';
 import {
   OnGatewayConnection,
@@ -13,6 +17,7 @@ import { IUpdateListOrder } from 'src/board/board.dto';
 import { BoardService } from 'src/board/board.service';
 import { WsAuthGuard } from 'src/guards/ws/ws.auth.guard';
 import { ListService } from 'src/list/list.service';
+import { TaskService } from 'src/task/task.service';
 import { KanbanService } from './kanban.service';
 
 @WebSocketGateway({
@@ -33,6 +38,7 @@ export class KanbanGateway
     private kanbanService: KanbanService,
     private listService: ListService,
     private boardService: BoardService,
+    private taskService: TaskService,
   ) {}
 
   private logger: Logger = new Logger('MessageGateway');
@@ -47,7 +53,6 @@ export class KanbanGateway
   @SubscribeMessage('setup')
   handleMessage(client: Socket, boardId: string) {
     client.join(boardId);
-    console.log('bords', boardId);
     client.emit('connected');
   }
 
@@ -57,16 +62,20 @@ export class KanbanGateway
     return this.boardService.updateListOrder(data);
   }
 
-  // @UseGuards(WsAuthGuard)
-  // @SubscribeMessage('getAllList')
-  // getAllBoardList(client: Socket, boardId: string): void {
-  //   this.listService.getKanbanBoardLists(
-  //     {
-  //       boardId,
-  //     },
-  //     client,
-  //   );
-  // }
+  @UseGuards(WsAuthGuard)
+  @SubscribeMessage('reorder-card-samelist')
+  handleUpdateTaskSameList(client: Socket, data: IUpdatetaskameList) {
+    return this.taskService.updatetaskameList(data);
+  }
+
+  @UseGuards(WsAuthGuard)
+  @SubscribeMessage('reorder-card-differentlist')
+  handleUpdateTaskDifferentList(
+    client: Socket,
+    data: IUpdatetaskDifferentList,
+  ) {
+    return this.taskService.updatetaskDifferentList(data);
+  }
 
   async handleDisconnect(client: Socket) {
     this.logger.log(`Client disconnected: `);
