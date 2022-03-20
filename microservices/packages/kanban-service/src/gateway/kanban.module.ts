@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ClientProxyFactory } from '@nestjs/microservices';
 import { TypegooseModule } from 'nestjs-typegoose';
+import { BoardService } from 'src/board/board.service';
 import { ConfigService } from 'src/config/config.service';
 import { WsAuthGuard } from 'src/guards/ws/ws.auth.guard';
 import { ListService } from 'src/list/list.service';
@@ -16,6 +17,7 @@ import { KanbanService } from './kanban.service';
   providers: [
     KanbanService,
     ListService,
+    BoardService,
     KanbanGateway,
     ConfigService,
     {

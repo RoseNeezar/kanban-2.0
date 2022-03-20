@@ -12,9 +12,10 @@ import {
   IGetBoard,
   IUpdateListOrder,
 } from './board.dto';
-
+import { Socket, Server } from 'socket.io';
 @Injectable()
 export class BoardService {
+  public socket: Server = null;
   constructor(
     @InjectModel(List)
     private readonly listModel: ReturnModelType<typeof List>,
@@ -86,7 +87,9 @@ export class BoardService {
           { new: true },
         );
 
-        return { updatedListOrder: result.kanbanListOrder };
+        return this.socket.in(boardId.toString()).emit('update-list-order', {
+          updatedListOrder: result.kanbanListOrder,
+        });
       }
     } catch (error) {
       throw new BadRequestException(ErrorSanitizer(error));
