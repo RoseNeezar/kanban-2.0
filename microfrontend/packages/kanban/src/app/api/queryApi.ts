@@ -5,6 +5,9 @@ import {
   IGetAllBoards,
   IGetAllListFromBoard,
   IAllTasks,
+  ITask,
+  IUpdateTask,
+  ICreateTask,
 } from "@store/types/kanban.types";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { toast } from "react-toastify";
@@ -94,9 +97,35 @@ const listService = {
     requests.post("/task/getalltask", { listIds: listIds }),
 };
 
+const taskService = {
+  createTask: (listId: string, title: string): Promise<ICreateTask> =>
+    requests.post("/tasks", {
+      listId: listId,
+      title: title,
+    }),
+  updateTask: (
+    title: string,
+    descriptions: string,
+    cardId: string,
+    dueDate?: string
+  ): Promise<IUpdateTask> => {
+    return requests.post(`/tasks/task/${cardId}`, {
+      title,
+      descriptions,
+      dueDate,
+    });
+  },
+  getTask: (cardId: string): Promise<ITask> => {
+    return requests.get(`/tasks/task/${cardId}`);
+  },
+  deleteTask: (cardId: string): Promise<any> =>
+    requests.del(`/tasks/task/${cardId}`),
+};
+
 const queryApi = {
   boardService,
   listService,
+  taskService,
 };
 
 export default queryApi;
