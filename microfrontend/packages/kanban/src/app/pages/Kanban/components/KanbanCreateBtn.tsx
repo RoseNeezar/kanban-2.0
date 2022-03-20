@@ -1,25 +1,33 @@
 import { useSocketStore } from "@store/useSocket.store";
 import React from "react";
-import { useCreateList } from "../hooks/useList";
+import { useCreateList, useCreateTask } from "../hooks/useList";
 
 interface IKanbanCreateList {
-  boardId: string;
+  dataId: string;
   action: "list" | "task";
   id?: string;
 }
 
-const KanbanCreateList: React.FC<IKanbanCreateList> = ({ boardId, action }) => {
+const KanbanCreateList: React.FC<IKanbanCreateList> = ({ dataId, action }) => {
   const [title, setTitle] = React.useState("");
   const [openForm, setOpenForm] = React.useState(false);
   const { createList } = useCreateList();
-  const { socket } = useSocketStore();
+  const { createTask } = useCreateTask();
 
-  const handleCreateList = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleCreateItem = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && title.length > 0) {
-      await createList({
-        title,
-        boardId,
-      });
+      if (action === "list") {
+        await createList({
+          title,
+          boardId: dataId,
+        });
+      } else if (action === "task") {
+        await createTask({
+          title,
+          listId: dataId,
+        });
+      }
+
       setTitle("");
       setOpenForm(false);
     }
@@ -36,7 +44,7 @@ const KanbanCreateList: React.FC<IKanbanCreateList> = ({ boardId, action }) => {
             }
             autoFocus
             value={title}
-            onKeyDown={(e) => handleCreateList(e)}
+            onKeyDown={(e) => handleCreateItem(e)}
             onChange={(e) => setTitle(e.target.value)}
             tw="p-2 mb-3 border-none rounded-md outline-none resize-none w-60"
           />

@@ -1,4 +1,4 @@
-import { IKanbanTask } from "@store/types/kanban.types";
+import { IKanbanTask, ITask } from "@store/types/kanban.types";
 import { FC } from "react";
 import styled from "@emotion/styled";
 import { Draggable } from "react-beautiful-dnd";
@@ -12,13 +12,13 @@ const Container = styled.div<{ isDragging: boolean }>`
 `;
 
 interface IKanbanTaskComp {
-  task: IKanbanTask;
+  task: ITask;
   index: number;
 }
 
 const KanbanTask: FC<IKanbanTaskComp> = ({ index, task }) => {
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task._id} index={index}>
       {(provided, snapshot) => (
         <Container
           {...provided.draggableProps}

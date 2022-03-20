@@ -1,15 +1,21 @@
+import { QueryClient } from "react-query";
+import { Socket } from "socket.io-client";
+
 export interface IKanbanTask {
   id: string;
   title: string;
 }
 
 export interface ISortKanban {
+  boardId?: string;
   dropIdStart: string;
   dropIdEnd: string;
   dragIndexStart: number;
   dragIndexEnd: number;
   dragableID: string;
   type: "task" | "list";
+  cache: QueryClient;
+  socket: Socket | null;
 }
 
 export interface IKanbanTask {
