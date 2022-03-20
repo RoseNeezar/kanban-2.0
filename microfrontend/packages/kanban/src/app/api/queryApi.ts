@@ -93,8 +93,6 @@ const listService = {
     requests.post(`/lists/${listId}`, { title: title }),
   deleteList: (listId: string): Promise<void> =>
     requests.del(`/lists/list/${listId}`),
-  getAllTaskFromList: (listIds: string[]): Promise<IAllTasks> =>
-    requests.post("/task/getalltask", { listIds: listIds }),
 };
 
 const taskService = {
@@ -118,6 +116,8 @@ const taskService = {
   getTask: (cardId: string): Promise<ITask> => {
     return requests.get(`/tasks/task/${cardId}`);
   },
+  getAllTaskFromList: (listIds: string[]): Promise<IAllTasks> =>
+    requests.post("/tasks/getalltask", { listIds: listIds }),
   deleteTask: (cardId: string): Promise<any> =>
     requests.del(`/tasks/task/${cardId}`),
 };
