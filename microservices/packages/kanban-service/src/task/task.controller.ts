@@ -9,11 +9,11 @@ import {
   IUpdatetaskameList,
   IUpdatetaskDifferentList,
 } from './task.dto';
-import { taskService } from './task.service';
+import { TaskService } from './task.service';
 
 @Controller('api/task')
 export class taskController {
-  constructor(private taskervice: taskService) {}
+  constructor(private taskervice: TaskService) {}
 
   @MessagePattern({ cmd: KanbanEvent.createTask })
   createtask(taskDto: ICreatetask) {

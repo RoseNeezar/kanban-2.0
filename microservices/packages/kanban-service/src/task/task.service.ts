@@ -13,9 +13,10 @@ import {
   IUpdatetaskameList,
   IUpdatetask,
 } from './task.dto';
-
+import { Server } from 'socket.io';
 @Injectable()
-export class taskService {
+export class TaskService {
+  public socket: Server = null;
   constructor(
     @InjectModel(List)
     private readonly listModel: ReturnModelType<typeof List>,
@@ -40,6 +41,7 @@ export class taskService {
       const newtaskIds = Array.from(list.taskIds);
       newtaskIds.push(task._id);
       const newList = await list.set({ taskIds: newtaskIds }).save();
+
       return { task, list: newList };
     } catch (error) {
       throw new BadRequestException(ErrorSanitizer(error));
@@ -48,6 +50,7 @@ export class taskService {
 
   async getAlltask(taskDto: IGetAlltask) {
     const { listIds } = taskDto;
+
     try {
       if (listIds && listIds[0].length > 0) {
         const taskPromise = listIds.map(
@@ -58,7 +61,7 @@ export class taskService {
         );
         let totaltask = await Promise.all(taskPromise);
 
-        return { task: totaltask };
+        return { task: totaltask.flatMap((x) => x.map((r) => r)) };
       }
 
       return { task: [] };
