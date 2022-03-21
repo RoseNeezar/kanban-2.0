@@ -1,6 +1,6 @@
-import { IKanbanTask, ITask } from "@store/types/kanban.types";
-import { FC } from "react";
 import styled from "@emotion/styled";
+import { ITask } from "@store/types/kanban.types";
+import { FC } from "react";
 import { Draggable } from "react-beautiful-dnd";
 
 const Container = styled.div<{ isDragging: boolean }>`

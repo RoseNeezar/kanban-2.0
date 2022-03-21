@@ -1,7 +1,5 @@
 import styled from "@emotion/styled";
-import { initType } from "@pages/Home/components/initial-data";
 import { IList, ITask } from "@store/types/kanban.types";
-import { useKanbanStore } from "@store/useKanbanStore";
 import { useSocketStore } from "@store/useSocket.store";
 import useSocket from "@store/websockets/websockets";
 import React, { FC } from "react";
@@ -12,9 +10,7 @@ import KanbanCreateList from "./components/KanbanCreateBtn";
 import KanbanList from "./components/KanbanList";
 import { useGetBoardList } from "./hooks/useList";
 import { sortKanban } from "./hooks/useSortKanban";
-const Container = styled.div`
-  display: flex;
-`;
+
 const Kanban: FC = () => {
   const { boardId } = useParams<{ boardId: string }>();
   useSocket(boardId as string);
