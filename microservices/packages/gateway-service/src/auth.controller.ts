@@ -95,6 +95,7 @@ export class AuthController {
   @Get('/me')
   @Authorization(true)
   me(@GetUser() user: IUser) {
+    
     return user;
   }
 
