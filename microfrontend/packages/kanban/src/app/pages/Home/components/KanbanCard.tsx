@@ -1,10 +1,4 @@
-import queryApi from "@api/queryApi";
-import { boardsKey } from "@api/queryKey";
-import { useAppDispatch } from "@store/hooks/hooks";
-import { deleteBoard } from "@store/module/kanban/kanban.slice";
-import produce from "immer";
-import React, { FC } from "react";
-import { useMutation, useQueryClient } from "react-query";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteBoard } from "../hooks/useBoard";
 
